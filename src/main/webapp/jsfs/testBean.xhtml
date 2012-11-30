@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>    
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/template.xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions" >
+
+    <ui:define name="content">
+    <h:form id="welcomeForm">
+    <h:outputText id="welcomeOutput"
+    value="Welcome to JavaServer Faces!"
+    style="font-family: Arial, sans-serif; font-size: 24;
+    color: green;"/>
+    <p>
+        <h:message id="errors" for="helloInput" style="color: red"/>
+    </p>
+    <p>
+        <h:outputLabel for="helloInput">
+        <h:outputText id="helloInputLabel"
+        value="Enter number of controls to display:"/>
+        </h:outputLabel>
+        <h:inputText id="helloInput" value="#{helloBean.numControls}"
+        required="true">
+        <f:validateLongRange minimum="1" maximum="500"/>
+        </h:inputText>        
+    </p>
+    <p>
+        <h:outputText id="controlPanel" 
+        value="#{helloBean.controlPanel}"
+        />
+        
+            <h:outputText id="test" value="#{helloBean.htmlInput}" escape="false"/>
+    </p>
+        <h:commandButton id="redisplayCommand" type="submit"
+        value="Redisplay"
+        actionListener="#{helloBean.addControls}"/>
+        <h:commandButton id="goodbyeCommand" type="submit" value="Goodbye"
+        action="#{helloBean.goodbye}" immediate="true"/>
+    </h:form>        
+    </ui:define>
+</ui:composition>
+</html>
+

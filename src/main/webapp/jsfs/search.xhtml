@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/template.xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"   >
+
+    <ui:define name="content">
+        <h:form>
+            <table>
+                <tr>
+                    <td>
+                        Search in:
+                        <h:selectOneMenu id="selectionItem" value="#{SearchBean.annotations}">
+                            <f:selectItem itemLabel="Chemopreventive Agents" itemValue="1"/>
+                            <f:selectItem itemLabel="Molecule" itemValue="2"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td>
+                        for
+                        <h:inputText id="searchTerm" value="#{SearchBean.searchterm}" styleClass="inputbox" size="30"/>
+                        <h:commandButton value="Submit" action="#{SearchBean.doSearch}" styleClass="submitButton"/>
+                    </td>
+
+                </tr>
+            </table>
+
+            <h:panelGroup id="mastergroup2" rendered="#{SearchBean.annotations == '1'}">
+                <h:panelGrid columns="1">
+                    <rich:list id="chemoTable" value="#{SearchBean.chemoResults}" var="chemo" rows="#{SearchBean.chemoLength}">
+                            <h:outputLink value='#{chemo.get("sdf")}'>#{chemo.get("label")}</h:outputLink>
+                    </rich:list>
+                    <a href='#{SearchBean.basicQueryInterfaceURL}'>More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer">Advanced Query Construction</a>
+                </h:panelGrid>
+            </h:panelGroup>  
+
+            <h:panelGroup id="mastergroup3" rendered="#{SearchBean.annotations == '2'}">
+                <h:panelGrid columns="1">
+                    <rich:list id="molTable" value="#{SearchBean.molResults}" var="mol" rows="#{SearchBean.molLength}">
+                            <h:outputLink value='#{mol.get("label")}'>#{mol.get("label")}</h:outputLink>
+                    </rich:list>
+                    <a href='#{SearchBean.basicQueryInterfaceURL}'>More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer">Advanced Query Construction</a>
+                </h:panelGrid>
+            </h:panelGroup>              
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>
+</html>
+

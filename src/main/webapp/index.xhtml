@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/template.xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"   >
+
+    <ui:define name="content">
+        <h:form>
+            <table align="center">
+                <tr>
+                    <td>
+                        Search in:
+                        <h:selectOneMenu id="annotationsItem" value="#{SearchBean.annotations}">
+                            <f:selectItem itemLabel="Annotations" itemValue="0"/>
+                            <f:selectItem itemLabel="Chemopreventive Agents" itemValue="1"/>
+                            <f:selectItem itemLabel="Molecule" itemValue="2"/>
+                            <f:selectItem itemLabel="Drug" itemValue="3"/>
+                        </h:selectOneMenu>
+                    </td>
+                    <td>
+                        for
+                        <h:inputText id="searchTerm" value="#{SearchBean.searchterm}" styleClass="inputbox"/>
+                        <h:commandButton value="Submit" action="#{SearchBean.doSearch}" styleClass="submitButton"/>
+                    </td>
+
+                </tr>
+            </table>
+
+            <br></br>
+
+            <h:panelGrid columns="2" rendered="#{SearchBean.annotations == '0'}">
+
+                        <rich:panel style="width:110px;"  >
+                            <a4j:outputPanel id="tabs" layout="block">
+                                <table border="0">
+                                    <tr>
+                                        <td>
+                                            <a4j:outputPanel layout="block" >
+                                                <rich:toggleControl event="click" targetPanel="resultsPanel" targetItem="documentsPanel" />
+                                                <h:outputLink class="grmenulink" >Documents</h:outputLink>
+                                            </a4j:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a4j:outputPanel layout="block">
+                                                <rich:toggleControl event="click" targetPanel="resultsPanel" targetItem="imagesPanel"  />
+                                                <h:outputLink class="grmenulink" >Images</h:outputLink>
+                                            </a4j:outputPanel>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a4j:outputPanel layout="block">
+                                                <rich:toggleControl event="click" targetPanel="resultsPanel" targetItem="forumPanel" />
+                                                <h:outputLink class="grmenulink" >Forum Posts</h:outputLink>
+                                            </a4j:outputPanel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a4j:outputPanel layout="block">
+                                                <rich:toggleControl event="click" targetPanel="resultsPanel" targetItem="clinicalPanel" />
+                                                <h:outputLink class="grmenulink" >Clinical Parts</h:outputLink>
+                                            </a4j:outputPanel>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </a4j:outputPanel>
+                        </rich:panel>
+
+                        <rich:panel style="height:300px;width:600px;" rendered="#{SearchBean.annotations == '0'}" >
+                            <rich:togglePanel id="resultsPanel"  render="tabs" switchType="client">
+
+                                <rich:togglePanelItem name="documentsPanel">
+                                    <rich:dataTable id="documentsTable" value="#{SearchBean.documentResults}" var="documentresult" iterationStatusVar="it"  rows="7" style="width:100%;">
+                                        <rich:column>
+                                            <f:facet name="header">
+                                                Documents Results
+                                            </f:facet>
+                                            <table border="0">
+                                                <tr>
+                                                    <td>
+                                                        <h:outputLink value="#{documentresult.binding.get(1).uri}">#{documentresult.binding.get(2).literal}</h:outputLink><br/>
+                                                        #{documentresult.binding.get(3).literal}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </rich:column>
+                                    </rich:dataTable>
+                                    <rich:dataScroller for="documentsTable" maxPages="5" />
+                                </rich:togglePanelItem>
+
+
+                                <rich:togglePanelItem name="imagesPanel">
+                                    <rich:dataTable id="imagesTable" value="#{SearchBean.imageResults}" var="imageresult" iterationStatusVar="it"  rows="7" style="width:100%;">
+                                    <rich:column>
+                                    <f:facet name="header">
+                                        Images Results
+                                    </f:facet>
+                                    <table border="0">
+                                        <tr>
+                                            <td>
+                                                <h:graphicImage value="#{imageresult.binding.get(1).uri}" style="height:50px;width:50px;"/>
+                                            </td>
+
+                                            <td>
+                                                <h:outputLink value="#">#{imageresult.binding.get(2).literal}</h:outputLink><br/>
+                                                #{imageresult.binding.get(2).literal}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    </rich:column>
+                                    </rich:dataTable>
+                                    <rich:dataScroller for="imagesTable" maxPages="5" />
+                                </rich:togglePanelItem>
+
+                                <rich:togglePanelItem name="forumPanel">
+                                     <rich:dataTable id="forumTable" value="#{SearchBean.forumResults}" var="forumresult" iterationStatusVar="it"  rows="7" style="width:100%;">
+                                        <rich:column>
+                                            <f:facet name="header">
+                                                Forum Results
+                                            </f:facet>
+                                            <table border="0">
+                                                <tr>
+                                                    <td>
+                                                        <h:outputLink value="#{forumresult.binding.get(1).uri}">#{forumresult.binding.get(2).literal}</h:outputLink><br/>
+                                                        #{forumresult.binding.get(3).literal}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </rich:column>
+                                    </rich:dataTable>
+                                    <rich:dataScroller for="forumTable" maxPages="5" />
+                                </rich:togglePanelItem>
+
+                                <rich:togglePanelItem name="clinicalPanel">
+                                    <rich:dataTable id="clinicalTable" value="#{SearchBean.clinicalResults}" var="clinicalresult" iterationStatusVar="it"  rows="7" style="width:100%;">
+                                        <rich:column>
+                                            <f:facet name="header">
+                                                Clinical Results
+                                            </f:facet>
+                                            <table border="0">
+                                                <tr>
+                                                    <td>
+                                                        <h:outputLink value="#{clinicalresult.binding.get(1).uri}">#{clinicalresult.binding.get(2).literal}</h:outputLink><br/>
+                                                        #{clinicalresult.binding.get(3).literal}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </rich:column>
+                                    </rich:dataTable>
+                                    <rich:dataScroller for="clinicalTable" maxPages="5" />
+                                </rich:togglePanelItem>
+                            </rich:togglePanel>
+                        </rich:panel>
+
+                    </h:panelGrid>
+
+
+
+            <center>
+            <h:panelGroup id="mastergroup2" rendered="#{SearchBean.annotations == '1'}">
+                <h:panelGrid columns="1">
+                    <rich:dataTable id="chemoTable" value="#{SearchBean.chemoResults}" var="chemo" rows="#{SearchBean.chemoLength}" align="center">
+                        <!--
+                        <rich:column style="width:100px;">
+                            <center><b>Description</b></center>
+                        </rich:column>
+                        -->
+                        <rich:column style="width:650px;">
+                            <table border="1" style="width:650px;" cellspacing="5">
+                            <tr>
+                                <td align="center"><b>Description</b></td>                            
+                            <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Chemopreventive Agent Name:</b> #{chemo.binding.get(1).literal}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Link to description:</b> <h:outputLink value="#{chemo.binding.get(0).uri}">#{chemo.binding.get(0).uri}</h:outputLink>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td>
+                                        <b>SMILE: </b> #{chemo.binding.get(2).literal}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Link to <h:outputLink value="#{chemo.binding.get(3).uri}">SDF</h:outputLink>
+                                    </td>
+                                </tr>                                
+                            </table>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td align="center"><b>Pathways</b></td>
+                                <td>(N/A)</td>
+                            </tr>
+                            <tr>
+                                <td align="center"><b>Assays</b></td>
+                                <td>(N/A)</td>
+                            </tr>
+                            <tr>
+                                <td align="center"><b>Publications</b></td>
+                                <td>(N/A)</td>
+                            </tr>                                
+                            </table>
+                            <br></br>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGrid>
+            </h:panelGroup>
+
+            <h:panelGroup id="mastergroup3" rendered="#{SearchBean.annotations == '2'}">
+                <h:panelGrid columns="1">
+                    <rich:dataTable id="molTable" value="#{SearchBean.molResults}" var="mol" rows="#{SearchBean.molLength}" align="center">
+
+                        <rich:column style="width:450px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Molecule Name:</b> #{mol.binding.get(1).literal}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Link to description:</b> <h:outputLink value="#{mol.binding.get(0).uri}">#{mol.binding.get(0).uri}</h:outputLink>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Same As: </b> <h:outputLink value="#{mol.binding.get(3).uri}">#{mol.binding.get(3).uri}</h:outputLink>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td>
+                                        <b>SMILE:</b> #{mol.binding.get(2).literal}
+                                    </td>
+                                </tr>
+                            </table>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGrid>
+            </h:panelGroup>
+
+            <h:panelGroup id="mastergroup4" rendered="#{SearchBean.annotations == '3'}">
+                <h:panelGrid columns="1">
+                    <rich:dataTable id="drugTable" value="#{SearchBean.drugResults}" var="drug" rows="#{SearchBean.drugsLength}" align="center">
+                        <rich:column style="width:450px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Drug Name:</b> #{drug.binding.get(1).literal}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Link to description:</b> <h:outputLink value="#{drug.binding.get(0).uri}">#{drug.binding.get(0).uri}</h:outputLink>
+                                    </td>
+                                </tr>
+                            </table>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:panelGrid>
+            </h:panelGroup>
+                
+                
+            </center>
+
+
+
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>
+</html>
+
