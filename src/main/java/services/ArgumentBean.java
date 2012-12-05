@@ -109,34 +109,56 @@ implements Serializable
         this.argumentsLength = argumentsLength;
     }
 
-    private String colorizeArgument(JSONObject jObject)
+    private String colorizeArgument(JSONObject jObject, String elementType)
     {
         String argument = jObject.getString("ArgumentSentence");
-        JSONArray elementArray = jObject.getJSONArray("ElementsFound");        
+        JSONArray elementArray = jObject.getJSONArray(elementType);
         Iterator elementIter = elementArray.iterator();
         
         while(elementIter.hasNext())
         {
             String elementFound = (String)((JSONObject)elementIter.next()).get("name");
-            JSONArray wordArray = jObject.getJSONArray(elementFound);
-            Iterator wordIter = wordArray.iterator();
+            //JSONArray wordArray = jObject.getJSONArray(elementFound);
+            //Iterator wordIter = wordArray.iterator();
             
-            while(wordIter.hasNext())
-            {
-                String word = (String)((JSONObject)wordIter.next()).get(elementFound.substring(0, elementFound.length()-1));
-                argument = argument.replaceAll(word, "<span style=\"background-color:" 
-                                + colourTable.get(elementFound) + "\">" + word + "</span>");
-            }
+            //while(wordIter.hasNext())
+            //{
+             //   String word = (String)((JSONObject)wordIter.next()).get(elementFound.substring(0, elementFound.length()-1));
+                argument = argument.replaceAll(elementFound, "<span style=\"background-color:" 
+                                + colourTable.get(elementType) + "\">" + elementFound + "</span>");
+            //}
         }
         
         System.out.println(argument);
         return argument;
     }
+
+    private String linkItemsFound(JSONArray jArray)
+    throws Throwable
+    {
+        Iterator elementIter = jArray.iterator();
+        String htmlString = new String("");
+        JSONObject jobject;
+        
+        while(elementIter.hasNext())
+        {
+            String elementFound = (String)((JSONObject)elementIter.next()).get("name");
+            LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+            LinkedList<JSONObject> lbdsResults = (LinkedList<JSONObject>)lbds.searchSpecificChemoAgent(elementFound);
+
+            jobject = (JSONObject)lbdsResults.get(0);
+            htmlString += "<a href=\"" + jobject.get("sdf") + "\">" + elementFound + "</a>";
+        }
+        
+        System.out.println(htmlString);
+        return htmlString;
+    }    
     
     public void getArgumentFromPaper()
-    throws IOException
+    throws IOException, Throwable
     {
         ArgumentDocumentSpace ads = new ArgumentDocumentSpace();
+        System.out.println(ads.retrieveArgumentsFromDocument());
         Iterator iter = ads.retrieveArgumentsFromDocument().getJSONArray("Argumentation").iterator();
         Iterator agentIter;
         argumentsList = new LinkedList<JSONObject>();
@@ -147,18 +169,18 @@ implements Serializable
             JSONObject jsonObject = ((JSONObject)iter.next());
             argumentsList.add(jsonObject);
             System.out.println(jsonObject.getString("ArgumentSentence"));
-            colorizeArgument(jsonObject);
-            jsonObject.set("ArgumentSentence", colorizeArgument(jsonObject));
-
-
-/*            
+            System.out.println(" ------------ " + jsonObject.getJSONArray("Agents").get(0));            
+            //colorizeArgument(jsonObject);
+            jsonObject.set("ArgumentSentence", colorizeArgument(jsonObject, "Agents"));
+            jsonObject.set("Words", linkItemsFound(jsonObject.getJSONArray("Agents")));
+/*
             agentIter = jsonObject.getJSONArray("Agents").iterator();
             while(agentIter.hasNext()){
                 String n = (String)(((JSONObject)agentIter.next()).get("Agent"));
                 System.out.println(n);
                 agentNames.add(n);
             }
-            */
+*/
 //            System.out.println(jsonObject.getJSONArray("Agents").getJSONObject(0).getString("Agent"));
         }
         

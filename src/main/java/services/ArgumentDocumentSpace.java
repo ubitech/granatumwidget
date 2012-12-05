@@ -13,10 +13,10 @@ public class ArgumentDocumentSpace
     public JSONObject retrieveArgumentsFromDocument()
     throws IOException
     {
-        InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\sampleJsn.txt");
+        InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\sampleJsn3.txt");
         String jsonTxt = IOUtils.toString(is);        
         JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
-        
+
         return(json);
     }
 
@@ -34,7 +34,7 @@ public class ArgumentDocumentSpace
         ArgumentDocumentSpace a = new ArgumentDocumentSpace();
         try
         {
-            System.out.println(a.retrieveArgumentsFromDocument());
+            System.out.println(a.retrieveArgumentsFromLinkedDataSpace());
         }   
         catch(Throwable t)
         {

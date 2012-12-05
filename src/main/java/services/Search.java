@@ -35,6 +35,7 @@ extends HttpServlet
             if(operation==null)
             {
                 oauthClient.requestTokensOAuth();
+                System.out.println("oauth 1 st step " + oauthClient.getOauthToken());
                 response.sendRedirect(oauthClient.getOauthAuthTokenURL()
                                     + "&oauth_token=" + oauthClient.getOauthToken() + "&"
                                     + "oauth_callback=" + java.net.URLEncoder.encode(request.getRequestURL().toString()

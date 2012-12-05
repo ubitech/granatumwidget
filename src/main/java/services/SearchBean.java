@@ -93,14 +93,14 @@ public class SearchBean {
     public void doSearch()
     {
         LinkedBiomedicalDataSpace d = new LinkedBiomedicalDataSpace();
-        
+
         if (annotations.trim().equalsIgnoreCase("1"))
         {            
             try
             {
-                d.searchSpecificChemoAgent(searchterm);                
-                chemoResults = (List<JSONObject>) d.getAssociatedEntities();
-                System.out.println(chemoResults);
+                chemoResults = (List<JSONObject>) d.searchSpecificChemoAgent(searchterm);
+                //chemoResults = (List<JSONObject>) d.getAssociatedEntities();
+                System.out.println("--------- " + chemoResults);
             } catch (Throwable ex)
             {
                 java.util.logging.Logger.getLogger(SearchBean.class.getName()).log(Level.SEVERE, null, ex);

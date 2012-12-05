@@ -108,7 +108,7 @@ implements Serializable
         this.searchString = new String("a,sam");
     }
     
-    public boolean getUserRelatedPublications()
+    public String getUserRelatedPublications()
     throws Throwable
     {
         this.getUserSearchPreferences();
@@ -117,10 +117,10 @@ implements Serializable
         relatedPublicationList = (List<JSONObject>)lbds.searchRelatedPublications(searchterms);
         //relatedPublicationList = (List<JSONObject>) lbds.getAssociatedEntities();
         System.out.println("4");
-        return true;
+        return new String("");
     }
 
-    public boolean getUserRelatedAssays()
+    public String getUserRelatedAssays()
     throws Throwable
     {
         this.getUserSearchPreferences();        
@@ -129,7 +129,7 @@ implements Serializable
         relatedAssaysList = (List<JSONObject>) lbds.searchRelatedAssays(searchterms);
         //relatedAssaysList = (List<JSONObject>) lbds.getAssociatedEntities();
         
-        return true;
+        return new String("");
     }    
     
     public static void main(String[] arg)

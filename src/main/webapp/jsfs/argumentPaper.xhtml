@@ -85,7 +85,7 @@
                     <rich:dataTable id="documentsTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it"  rows="2" style="width:100%;" >
                     <rich:column>
                         <f:facet name="header">
-                             Paper Analyzation
+                             Paper Analysis
                         </f:facet>                              
                         <table cellspacing="3" border="1">
                         <tr>
@@ -94,29 +94,8 @@
                         <tr>
                             <td><b>Agents:</b></td>
                             <td>
-                               <rich:dataTable id="argumentTable3" value='#{args.getJSONArray("Agents")}' var="agents" iterationStatusVar="it2"  rows="2" style="width:400px;" >
-                               <rich:column>
-                                    <table>
-                                    <tr>    
-                                        <td>
-                                            #{agents}
-                                        </td>
-                                    </tr>
-                                    </table>                                   
-                               </rich:column>    
-                               </rich:dataTable>
+                               <h:outputText value='#{args.getString("Words")}' escape="false"/> 
                             </td>
-                                <!--                            
-                                <a4j:repeat id="argumentTable3" value='#{args.getJSONArray("Agents")}' var="agents">
-                                    <table>
-                                        <tr>    
-                                    <td>
-                                        #{agents}
-                                    </td>
-                                        </tr>
-                                    </table>
-                                </a4j:repeat>
--->
                         </tr>                            
                         </table>
                     </rich:column>                        
@@ -124,23 +103,48 @@
                     <rich:dataScroller  id="ds1" boundaryControls="hide" fastControls="hide" for="documentsTable" maxPages="2"/>
                 </h:panelGrid>
             </h:panelGroup>       
-<!--
-            <h:panelGroup id="mastergroup3" rendered="#{ArgumentBean.searchtermLength>0}">
-               
+
+            <h:panelGroup id="mastergroup4" rendered="#{ArgumentBean.searchtermLength>0}">
+                 <h:panelGrid columns="1">
+
+                     
+                    <rich:dataTable id="searchTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it2"  rows="2" style="width:100%;" >
+                    <rich:column>
+
+                        <table cellspacing="3" border="0">                        
+                        <tr>
+                            <td><b>Title: </b></td><td>#{args.getString("Title")}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Sentence: </b></td><td><i>#{args.getString("ArgumentSentence")}</i></td>
+                        </tr>
+                        <tr>
+                            <td><b>Link to document:</b></td><td><h:outputLink value='#{args.getString("URL")}'>#{args.getString("URL")}</h:outputLink></td>                            
+                        </tr>        
+                    </table>                            
+                    </rich:column>                        
+                    </rich:dataTable>
+
+                        
+                    <rich:dataScroller  id="ds2" boundaryControls="hide" fastControls="hide" for="searchTable" maxPages="2"/>
+                </h:panelGrid>
+           </h:panelGroup>                
+
+<!--                
                 <h:panelGrid columns="1">
                     <a4j:repeat id="argumentTable3" value="#{ArgumentBean.argumentsList}" var="args">
-                    <table cellspacing="5" border="1">
                         <tr>
-                            <td><b>#{args.getString("elementFound")}</b></td><td><i>#{args.getString(args.getString("elementFound"))}</i></td>
+                            <td><b>#{args.getString("Title")}</b></td><td><i>#{args.getString("ArgumentSentence")}</i></td>
                         </tr>
                         <tr>
                             <td><b>Link to document:</b></td><td>#{args.getString("URL")}</td>
                         </tr>
-                    </table>    
+
                     </a4j:repeat>
                 </h:panelGrid>
+                </table>    
+            </h:panelGroup>
 -->
-
 <!--                <h:panelGrid columns="1">
 
                 </h:panelGrid>

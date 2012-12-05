@@ -136,13 +136,14 @@ public class OAuthBasicClient
     {
         HttpClient client = new HttpClient();
         GetMethod method = new GetMethod(oauthRequestTokenURL);
-
-        while(oauthToken==null)
+        int statusCode = 0;
+        
+        while(statusCode!=200)
         {
                 try {
                   method.setRequestHeader("Authorization", "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"2376346\",oauth_timestamp=" + oauthTimestamp);                
                   System.out.println("AUTH= " + "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"2376346\",oauth_timestamp=" + oauthTimestamp);
-                  int statusCode = client.executeMethod(method);
+                  statusCode = client.executeMethod(method);
                   byte[] responseBody = method.getResponseBody();
                   String reqString = new String(responseBody);
 
