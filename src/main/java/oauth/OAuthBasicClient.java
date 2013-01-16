@@ -204,8 +204,14 @@ public class OAuthBasicClient
                   }
                   else if(statusCode == 401)
                   {
+                        //System.out.println("reqString = " + reqString.split("\n")[1]);
+                        System.out.println("respString=" + reqString + "oauthTimestamp=" + oauthTimestamp);
+                        oauthTimedelta = Integer.parseInt(reqString.split("\n")[1].split("\\+")[1].split(":")[0]);
+                        
+                        /*
                         oauthTimestamp = Integer.parseInt((reqString.split(":")[0].split("=")[1]).substring(1, reqString.split(":")[0].split("=")[1].length()-1));
                         oauthTimedelta = Integer.parseInt(reqString.split(":")[1].trim().split(" ")[1]);
+                        */ 
                         oauthTimestamp = Math.abs(oauthTimedelta) + oauthTimestamp + 1;
                         System.out.println(" -requestAccessOAuth");
                         
@@ -498,6 +504,9 @@ public class OAuthBasicClient
     
     public static void main(String[] args)
     {
+        String reqString = new String("OAuth Error\n oauth_token: timedelta +94:");
+        System.out.println(reqString);
+        System.out.println("reqString = " + reqString.split("\n")[1].split("\\+")[1].split(":")[0]);
         /*
         try {
             OAuthCBasiclient c = new OAuthCBasiclient();

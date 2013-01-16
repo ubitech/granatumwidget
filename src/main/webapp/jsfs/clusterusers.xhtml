@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/template.xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"   >
+    <title>Cluster Users</title>
+    <ui:define name="content">
+
+            #{SemanticNetworkAnalysisBean.getClusteringService()}
+            <h:panelGroup id="mastergroup2" rendered="#{SemanticNetworkAnalysisBean.errorOccured==false}">
+                <h:panelGrid columns="1">
+                    <rich:list id="playersTable" value="#{SemanticNetworkAnalysisBean.clusterList}" var="cplayer" rows="#{SemanticNetworkAnalysisBean.clusterLength}">
+                            <h:outputLink target="_new" value='http://www.granatum.org/bscw/bscw.cgi/#{cplayer.get("id")}'>#{cplayer.get("name")}</h:outputLink>
+                    </rich:list>
+                </h:panelGrid>
+            </h:panelGroup>  
+
+            <h:panelGroup id="mastergroup3" rendered="#{SemanticNetworkAnalysisBean.errorOccured==true}">
+                <p>#{SemanticNetworkAnalysisBean.errorMessage}</p>
+            </h:panelGroup>  
+                        
+    </ui:define>
+</ui:composition>
+</html>
+

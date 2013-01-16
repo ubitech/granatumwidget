@@ -34,6 +34,16 @@
     </servlet>
 
     <servlet>
+        <servlet-name>Clusterusers</servlet-name>
+        <servlet-class>services.Clusterusers</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Keyplayers</servlet-name>
+        <servlet-class>services.Keyplayers</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>Search</servlet-name>
         <servlet-class>services.Search</servlet-class>
     </servlet>
@@ -47,6 +57,16 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Clusterusers</servlet-name>
+        <url-pattern>/Clusterusers</url-pattern>
+    </servlet-mapping>   
+
+    <servlet-mapping>
+        <servlet-name>Keyplayers</servlet-name>
+        <url-pattern>/Keyplayers</url-pattern>
+    </servlet-mapping>   
 
     <servlet-mapping>
         <servlet-name>Search</servlet-name>

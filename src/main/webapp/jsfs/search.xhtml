@@ -13,18 +13,16 @@
         <h:form>
             <table>
                 <tr>
-                    <td>
                         Search in:
                         <h:selectOneMenu id="selectionItem" value="#{SearchBean.annotations}">
                             <f:selectItem itemLabel="Chemopreventive Agents" itemValue="1"/>
                             <f:selectItem itemLabel="Molecule" itemValue="2"/>
                         </h:selectOneMenu>
-                    </td>
-                    <td>
+                </tr>
+                <tr>
                         for
                         <h:inputText id="searchTerm" value="#{SearchBean.searchterm}" styleClass="inputbox" size="30"/>
                         <h:commandButton value="Submit" action="#{SearchBean.doSearch}" styleClass="submitButton"/>
-                    </td>
 
                 </tr>
             </table>
@@ -34,7 +32,7 @@
                     <rich:list id="chemoTable" value="#{SearchBean.chemoResults}" var="chemo" rows="#{SearchBean.chemoLength}">
                             <h:outputLink value='#{chemo.get("sdf")}'>#{chemo.get("label")}</h:outputLink>
                     </rich:list>
-                    <a href='#{SearchBean.basicQueryInterfaceURL}'>More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer">Advanced Query Construction</a>
+                    <a href='#{SearchBean.basicQueryInterfaceURL}' target="_new">More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer" target="_new">Advanced Query Construction</a>
                 </h:panelGrid>
             </h:panelGroup>  
 
@@ -43,7 +41,7 @@
                     <rich:list id="molTable" value="#{SearchBean.molResults}" var="mol" rows="#{SearchBean.molLength}">
                             <h:outputLink value='#{mol.get("label")}'>#{mol.get("label")}</h:outputLink>
                     </rich:list>
-                    <a href='#{SearchBean.basicQueryInterfaceURL}'>More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer">Advanced Query Construction</a>
+                    <a href='#{SearchBean.basicQueryInterfaceURL}' target="_new">More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer" target="_new">Advanced Query Construction</a>
                 </h:panelGrid>
             </h:panelGroup>              
         </h:form>

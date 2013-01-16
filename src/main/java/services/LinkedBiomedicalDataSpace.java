@@ -97,6 +97,24 @@ extends Service
         return(getAssociatedEntities());
     }
 
+    public Collection searchSpecificProtein(String searchTerm)
+    throws Throwable
+    {
+        formalizeQueryString("SELECT distinct ?ChemoAgent ?Label ?sdf WHERE " + 
+                             "{ ?ChemoAgent a <http://chem.deri.ie/granatum/ChemopreventiveAgent>. " +
+                             "?ChemoAgent <http://www.w3.org/2000/01/rdf-schema#label> ?Label. " +
+                             "?ChemoAgent <http://chem.deri.ie/granatum/sdf_file> ?sdf." +
+                             "filter regex(?Label,\""+ searchTerm +"\",\"i\").} limit " + maxReturnedResults);
+
+        bindingNames = new String[4];
+        bindingNames[0] = "index";
+        bindingNames[1] = "ChemoAgent";
+        bindingNames[2] = "label";
+        bindingNames[3] = "sdf";
+
+        return(getAssociatedEntities());
+    }    
+    
     public Collection searchSpecificMolecule(String searchTerm)
     throws Throwable
     {

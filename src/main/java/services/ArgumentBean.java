@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import java.util.logging.Logger;
+import org.richfaces.event.FileUploadEvent;
 
 
 @ManagedBean(name = "ArgumentBean")
@@ -35,6 +36,7 @@ implements Serializable
         return sel;
     }
 
+    
     public List<String> getAgentNames() {
         return agentNames;
     }
@@ -84,6 +86,7 @@ implements Serializable
         colourTable = new HashMap<String, String>();
         colourTable.put("Agents", "yellow");
         colourTable.put("Proteins", "red");
+        colourTable.put("Diseases", "green");
     }
 
     public String getSearchterm() {
@@ -109,7 +112,35 @@ implements Serializable
     public void setArgumentsLength(int argumentsLength) {
         this.argumentsLength = argumentsLength;
     }
+    
+    private String colorizeArgument(JSONObject jObject, String[] elementType)
+    {
+        String argument = jObject.getString("ArgumentSentence");
+        
+        for(int i=0;i<elementType.length;i++)
+        {
+            try
+            {    
+                JSONArray elementArray = jObject.getJSONArray(elementType[i]);
+                if(elementArray!=null)
+                {
+                    Iterator elementIter = elementArray.iterator();
 
+                    while(elementIter.hasNext())
+                    {
+                        String elementFound = (String)((JSONObject)elementIter.next()).get("name");
+                            argument = argument.replaceAll(elementFound, "<span style=\"background-color:" 
+                                            + colourTable.get(elementType[i]) + "\">" + elementFound + "</span>");
+                    }
+                }
+            }
+            catch(net.sf.json.JSONException jsonex) {}
+        }
+        
+        System.out.println(argument);
+        return argument;
+    }    
+/*
     private String colorizeArgument(JSONObject jObject, String elementType)
     {
         String argument = jObject.getString("ArgumentSentence");
@@ -133,7 +164,8 @@ implements Serializable
         System.out.println(argument);
         return argument;
     }
-
+    */ 
+/*
     private String linkItemsFound(JSONArray jArray)
     throws Throwable
     {
@@ -148,14 +180,34 @@ implements Serializable
             LinkedList<JSONObject> lbdsResults = (LinkedList<JSONObject>)lbds.searchSpecificChemoAgent(elementFound);
 
             jobject = (JSONObject)lbdsResults.get(0);
-            htmlString += "<a href=\"" + jobject.get("sdf") + "\">" + elementFound + "</a>";
+            htmlString += "<a href=\"" + jobject.get("sdf") + "\">" + elementFound + "</a> | ";
+        }
+        
+        System.out.println(htmlString);
+        return htmlString;
+    }    
+  */  
+
+    private String linkItemsFound(JSONArray jArray)
+    throws Throwable
+    {
+        Iterator elementIter = jArray.iterator();
+        String htmlString = new String("");
+        JSONObject jobject;
+        
+        while(elementIter.hasNext())
+        {
+            jobject = (JSONObject)elementIter.next();
+            String elementFound = (String)jobject.get("name");
+            
+            htmlString += "<a href=\"" + jobject.get("url") + "\">" + elementFound + "</a> | ";
         }
         
         System.out.println(htmlString);
         return htmlString;
     }    
     
-    public void getArgumentFromPaper()
+    public boolean getArgumentFromPaper()
     throws IOException, Throwable
     {
         ArgumentDocumentSpace ads = new ArgumentDocumentSpace();
@@ -164,16 +216,22 @@ implements Serializable
         Iterator agentIter;
         argumentsList = new LinkedList<JSONObject>();
         agentNames = new LinkedList<String>();
-        
+
         while(iter.hasNext())
         {
             JSONObject jsonObject = ((JSONObject)iter.next());
             argumentsList.add(jsonObject);
             System.out.println(jsonObject.getString("ArgumentSentence"));
             System.out.println(" ------------ " + jsonObject.getJSONArray("Agents").get(0));            
+//            System.out.println(" ------------ " + jsonObject.getJSONArray("Proteins").get(0));            
+            
             //colorizeArgument(jsonObject);
-            jsonObject.set("ArgumentSentence", colorizeArgument(jsonObject, "Agents"));
-            jsonObject.set("Words", linkItemsFound(jsonObject.getJSONArray("Agents")));
+            jsonObject.set("ArgumentSentence", colorizeArgument(jsonObject, new String[]{"Agents", "Proteins"}));
+            try {jsonObject.set("Agents", linkItemsFound(jsonObject.getJSONArray("Agents"))); }
+            catch(net.sf.json.JSONException jsonexa) {jsonObject.set("Agents","");}
+            try { jsonObject.set("Proteins", linkItemsFound(jsonObject.getJSONArray("Proteins"))); }
+            catch(net.sf.json.JSONException jsonexb) {jsonObject.set("Proteins","");}
+
 /*
             agentIter = jsonObject.getJSONArray("Agents").iterator();
             while(agentIter.hasNext()){
@@ -186,6 +244,7 @@ implements Serializable
         }
         
 //        System.out.println(" ++++++ " + argumentsList);
+        return true;
     }
     
     public void keywordSearch() throws IOException

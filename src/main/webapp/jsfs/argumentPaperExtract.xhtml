@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="/templates/template.xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <ui:define name="content">
+
+        <h:form>   
+            <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
+                <table cellspacing="5" border="0">
+                    <tr>
+                        <td>
+                            <b>Notation:</b>
+                        </td>
+                        <td>
+                            <span style="background-color:yellow;">Agent</span>
+                        </td>
+                        <td>
+                            <span style="background-color:red;">Protein</span>
+                        </td>
+                        <td>
+                            <span style="background-color:green;">Diseases</span>
+                        </td>                        
+                    </tr>
+                </table>
+                
+                <h:panelGrid columns="1">
+                     
+                    <rich:dataTable id="documentsTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it"  rows="2" style="width:100%;" >
+                    <rich:column>
+                        <f:facet name="header">
+                             Paper Analysis
+                        </f:facet>                              
+                        <table cellspacing="0" border="0">
+                        <tr>
+                            <td><b>Argument:</b></td><td><i><h:outputText value='#{args.getString("ArgumentSentence")}' escape="false"/></i></td>
+                        </tr>
+                        <c:if test='#{args.get("Proteins")!=""}'>
+                        <tr>
+                            <td><b>Proteins:</b></td>
+                            <td>
+                               <h:outputText value='#{args.get("Proteins")}' escape="false"/>
+                            </td>
+                        </tr>  
+                        </c:if>
+                        <tr>
+                            <td><b>Agents:</b></td>
+                            <td>
+                               <h:outputText value='#{args.getString("Agents")}' escape="false"/> 
+                            </td>
+                        </tr>                            
+                        </table>
+                    </rich:column>                        
+                    </rich:dataTable>
+                    <rich:dataScroller  id="ds1" boundaryControls="hide" fastControls="hide" for="documentsTable" maxPages="2"/>
+                </h:panelGrid>
+            </h:panelGroup>       
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
+

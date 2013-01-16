@@ -8,9 +8,13 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/template.xhtml"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions"   >
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:c="http://java.sun.com/jsp/jstl/core" >
 
     <ui:define name="content">
+
+        <a4j:region id="extr">
+        
         <h:form>
             <h:panelGroup id="mastergroup0" rendered="#{ArgumentBean.searchtermLength ==0}">
                 <table>
@@ -23,6 +27,7 @@
 
             </h:panelGroup>
             <br></br>
+            <a4j:region id="intr">
             <table>
                 <tr>
                     <td>
@@ -30,10 +35,11 @@
                     </td>
                     <td>
 
-                        <h:inputText id="fileupload" value="#{ArgumentBean.filename}" styleClass="inputbox" size="30"/>
+                        <h:inputText id="fileupload"  value="#{ArgumentBean.filename}" styleClass="inputbox" size="30"/>
+
                     </td>
                     <td>
-                        <h:commandButton value="Submit" action="#{ArgumentBean.getArgumentFromPaper}" styleClass="submitButton" />
+                        <h:commandButton value="Submit" action="#{ArgumentBean.getArgumentFromPaper}" styleClass="submitButton" status="commonstatus" />
                     </td>
                 </tr>
                 <tr>
@@ -44,13 +50,13 @@
                         <h:inputText id="keywordsearch" value="#{ArgumentBean.searchterm}" styleClass="inputbox" size="30"/>
                     </td>
                     <td>
-                        <h:commandButton value="Submit" action="#{ArgumentBean.keywordSearch}" styleClass="submitButton"/>
+                        <h:commandButton value="Submit" action="#{ArgumentBean.keywordSearch}" styleClass="submitButton" status="commonstatus"/>
                     </td>
                 </tr>
 
             </table>
             <br></br>
-
+            </a4j:region>
             <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.filenameLengnth>0}">
                 <table cellspacing="5" border="0">
                     <tr>
@@ -63,6 +69,9 @@
                         <td>
                             <span style="background-color:red;">Protein</span>
                         </td>
+                        <td>
+                            <span style="background-color:green;">Diseases</span>
+                        </td>                        
                     </tr>
                 </table>
                 
@@ -87,14 +96,22 @@
                         <f:facet name="header">
                              Paper Analysis
                         </f:facet>                              
-                        <table cellspacing="3" border="1">
+                        <table cellspacing="0" border="0">
                         <tr>
                             <td><b>Argument:</b></td><td><i><h:outputText value='#{args.getString("ArgumentSentence")}' escape="false"/></i></td>
                         </tr>
+                        <c:if test='#{args.get("Proteins")!=""}'>
+                        <tr>
+                            <td><b>Proteins:</b></td>
+                            <td>
+                               <h:outputText value='#{args.get("Proteins")}' escape="false"/>
+                            </td>
+                        </tr>  
+                        </c:if>
                         <tr>
                             <td><b>Agents:</b></td>
                             <td>
-                               <h:outputText value='#{args.getString("Words")}' escape="false"/> 
+                               <h:outputText value='#{args.getString("Agents")}' escape="false"/> 
                             </td>
                         </tr>                            
                         </table>
@@ -190,7 +207,7 @@
 -->
         </h:form>
 
-
+</a4j:region>
     </ui:define>
 </ui:composition>
 </html>
