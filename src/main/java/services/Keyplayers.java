@@ -23,7 +23,6 @@ extends HttpServlet
     
     public void init()
     {
-        oauthClient = new OAuthBasicClient(consumerKey, consumerSecret);        
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -38,6 +37,8 @@ extends HttpServlet
 
             if(operation==null)
             {
+                oauthClient = new OAuthBasicClient(consumerKey, consumerSecret);        
+                
                 oauthClient.requestTokensOAuth();
                 System.out.println("oauth 1 st step " + oauthClient.getOauthToken());
                 response.sendRedirect(oauthClient.getOauthAuthTokenURL()
