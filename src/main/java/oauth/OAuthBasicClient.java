@@ -140,6 +140,7 @@ public class OAuthBasicClient
         
         while(statusCode!=200)
         {
+                System.out.println("Status code=" + statusCode);
                 try {
                   method.setRequestHeader("Authorization", "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"2376346\",oauth_timestamp=" + oauthTimestamp);                
                   System.out.println("AUTH= " + "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"2376346\",oauth_timestamp=" + oauthTimestamp);
