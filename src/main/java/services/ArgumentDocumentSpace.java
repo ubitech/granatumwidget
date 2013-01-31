@@ -13,8 +13,8 @@ public class ArgumentDocumentSpace
     public JSONObject retrieveArgumentsFromDocument()
     throws IOException
     {
-        //InputStream is = new FileInputStream("/home/ubiadmin/temp/AnnotationWebAppTmp/jsonOutput.txt");
-        InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\jsonAgntPlProteins2.txt");        
+        InputStream is = new FileInputStream("/home/ubiadmin/temp/AnnotationWebAppTmp/jsonOutput.txt");
+        //InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\jsonAgntPlProteins2.txt");        
         String jsonTxt = IOUtils.toString(is);        
         JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
 
