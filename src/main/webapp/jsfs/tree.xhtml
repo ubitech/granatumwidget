@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      template="/templates/template.xhtml"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <ui:define name="content">
+    <h:form>
+
+    <rich:tabPanel switchType="client" style="width:800px;">
+        <rich:tab label="All" header="All">
+            
+            <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
+               
+                <table cellspacing="5" border="0">
+
+                    <tr>
+                        <td>
+                            <b>Title:</b>
+                        </td>
+                        <td>
+                            #{ArgumentBean.title}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Journal:</b>
+                        </td>
+                        <td>
+                            #{ArgumentBean.journal}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>URL:</b>
+                        </td>
+                        <td>
+                            <h:outputLink target="_new" value='#{ArgumentBean.url}'>#{ArgumentBean.url}</h:outputLink>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>PID:</b>
+                        </td>
+                        <td>
+                            <h:outputText value='#{ArgumentBean.pid}' escape="false"/>
+                        </td>
+                    </tr>                    
+                </table>
+                <table cellspacing="5" border="0">
+                    <tr>
+                        <td>
+                            <b>Notation:</b>
+                        </td>
+                        <td>
+                            <span style="background-color:yellow;">Agent</span>
+                        </td>
+                        <td>
+                            <span style="background-color:red;">Protein</span>
+                        </td>
+                        <td>
+                            <span style="background-color:green;">Diseases</span>
+                        </td>                        
+                    </tr>
+                </table> 
+                
+                <h:panelGrid columns="1">
+                     
+                    <rich:dataTable id="documentsTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it"  rows="2" style="width:100%;" >
+                    <rich:column>
+                        <f:facet name="header">
+                             Paper Analysis
+                        </f:facet>                              
+                        <table cellspacing="0" border="0">
+                        <tr>
+                            <td><b>Argument:</b></td><td><i><h:outputText value='#{args.getString("ArgumentSentence")}' escape="false"/></i></td>
+                        </tr>
+                        <tr>
+                            <td><b><h:outputText rendered='#{args.get("Proteins")!=""}' value="Proteins"></h:outputText> </b></td>
+                            <td>
+                               <h:outputText rendered='#{args.get("Proteins")!=""}' value='#{args.get("Proteins")}' escape="false"/>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td><b><h:outputText rendered='#{args.get("Agents")!=""}' value="Agents"></h:outputText> </b></td>
+                            <td>
+                               <h:outputText rendered='#{args.get("Agents")!=""}' value='#{args.get("Agents")}' escape="false"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <h:commandLink action='#{ArgumentBean.getRelatedArguments()}' value='Related Arguments'>
+                                    <f:param name="argno" value='#{args.getString("argno")}' />
+                                </h:commandLink>
+                            </td>
+                        </tr>  
+                        </table>
+                    </rich:column>                        
+                    </rich:dataTable>
+                    <rich:dataScroller  id="ds1" boundaryControls="hide" fastControls="hide" for="documentsTable" maxPages="2"/>
+                </h:panelGrid>
+            </h:panelGroup>       
+
+
+        </rich:tab>
+        <rich:tab label="Agents" header="Agents">
+            <h:panelGroup id="mastergroup2" rendered="true">
+
+                <table cellspacing="5" border="0">
+                    <tr>
+                        <td>
+                            <b>Notation:</b>
+                        </td>
+                        <td>
+                            <span style="background-color:yellow;">Agent</span>
+                        </td>
+                        <td>
+                            <span style="background-color:red;">Protein</span>
+                        </td>
+                        <td>
+                            <span style="background-color:green;">Diseases</span>
+                        </td>                        
+                    </tr>
+                </table> 
+                
+                <h:panelGrid columns="1">
+                     
+                    <rich:dataTable id="chemodocumentsTable" value="#{ArgumentBean.chemoArgsList}" var="chemoargs" iterationStatusVar="itc"  rows="2" style="width:100%;" >
+                    <rich:column>
+                        <f:facet name="header">
+                             Paper Analysis
+                        </f:facet>                              
+                        <table cellspacing="0" border="0">
+                        <tr>
+                            <td><b>Argument:</b></td><td><i><h:outputText value='#{chemoargs.getString("ArgumentSentence")}' escape="false"/></i></td>
+                        </tr>
+                        <tr>
+                            <td><b>Agents:</b></td>
+                            <td>
+                               <h:outputText value='#{chemoargs.getString("Agents")}' escape="false"/> 
+                            </td>
+                        </tr>    
+                        </table>
+                    </rich:column>                        
+                    </rich:dataTable>
+                    <rich:dataScroller  id="ds3" boundaryControls="hide" fastControls="hide" for="chemodocumentsTable" maxPages="2"/>
+                </h:panelGrid>
+        </h:panelGroup>
+
+        </rich:tab>
+        <rich:tab label="Proteins" header="Proteins">
+            <h:panelGroup id="mastergroup3" rendered="true">
+                <table cellspacing="5" border="0">
+                    <tr>
+                        <td>
+                            <b>Notation:</b>
+                        </td>
+                        <td>
+                            <span style="background-color:yellow;">Agent</span>
+                        </td>
+                        <td>
+                            <span style="background-color:red;">Protein</span>
+                        </td>
+                        <td>
+                            <span style="background-color:green;">Diseases</span>
+                        </td>                        
+                    </tr>
+                </table> 
+
+                <h:panelGrid columns="1">
+                     
+                    <rich:dataTable id="proteindocumentsTable" value="#{ArgumentBean.proteinArgsList}" var="proteinargs" iterationStatusVar="itc"  rows="2" style="width:100%;" >
+                    <rich:column>
+                        <f:facet name="header">
+                             Paper Analysis
+                        </f:facet>                              
+                        <table cellspacing="0" border="0">
+                        <tr>
+                            <td><b>Argument:</b></td><td><i><h:outputText value='#{proteinargs.getString("ArgumentSentence")}' escape="false"/></i></td>
+                        <tr>
+                            <td><b>Proteins:</b></td>
+                            <td>
+                               <h:outputText value='#{proteinargs.getString("Proteins")}' escape="false"/> 
+                            </td>
+                        </tr>                              
+                        </tr>
+                        </table>
+                    </rich:column>                        
+                    </rich:dataTable>
+                    <rich:dataScroller  id="ds4" boundaryControls="hide" fastControls="hide" for="proteindocumentsTable" maxPages="2"/>
+                </h:panelGrid>
+        </h:panelGroup>
+            
+        </rich:tab>
+    </rich:tabPanel>
+
+    </h:form>
+   </ui:define>
+ </ui:composition>
+</html>
+

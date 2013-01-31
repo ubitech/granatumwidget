@@ -12,8 +12,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.richfaces.event.FileUploadEvent;
 
 
@@ -24,13 +26,103 @@ implements Serializable
 {
     private List<JSONObject> argumentsList;
     private List<String> agentNames;
+    private List<JSONObject> chemoArgsList;    
+    private List<JSONObject> proteinArgsList;     
+    private List<JSONObject> relatedArgs;
     private int argumentsLength;
     private int filenameLengnth = 0;
     private int searchtermLength;
+    private int relatedArgsLength = 0;
     private HashMap<String, String> colourTable;
     private String searchterm = null;
     private String filename = null;    
     private String sel = null;
+    private String title = null;
+    private String journal = null;
+    private String pid = null;
+    private String url = null;
+    private LinkedList<String> relatedBox = null;
+    private HashMap<String, LinkedList<String>> listRelatedArgs = null;
+
+    public List<JSONObject> getProteinArgsList() {
+        return proteinArgsList;
+    }
+
+    public void setProteinArgsList(List<JSONObject> proteinArgsList) {
+        this.proteinArgsList = proteinArgsList;
+    }
+
+    public List<JSONObject> getChemoArgsList() {
+        return chemoArgsList;
+    }
+
+    public void setChemoArgsList(List<JSONObject> chemoArgsList) {
+        this.chemoArgsList = chemoArgsList;
+    }
+
+    public List<JSONObject> getRelatedArgs() {
+        return relatedArgs;
+    }
+
+    public void setRelatedArgs(List<JSONObject> relatedArgs) {
+        this.relatedArgs = relatedArgs;
+    }
+
+    public int getRelatedArgsLength() {
+        return relatedArgsLength;
+    }
+
+    public void setRelatedArgsLength(int relatedArgsLength) {
+        this.relatedArgsLength = relatedArgsLength;
+    }
+    
+    public HashMap<String, LinkedList<String>> getListRelatedArgs() {
+        return listRelatedArgs;
+    }
+
+    public void setListRelatedArgs(HashMap<String, LinkedList<String>> listRelatedArgs) {
+        this.listRelatedArgs = listRelatedArgs;
+    }
+   
+    public LinkedList<String> getRelatedBox() {
+        return relatedBox;
+    }
+
+    public void setRelatedBox(LinkedList<String> relatedBox) {
+        this.relatedBox = relatedBox;
+    }
+
+    public String getJournal() {
+        return journal;
+    }
+
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }   
+    
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getSel() {
         return sel;
@@ -87,6 +179,7 @@ implements Serializable
         colourTable.put("Agents", "yellow");
         colourTable.put("Proteins", "red");
         colourTable.put("Diseases", "green");
+        listRelatedArgs = new HashMap<String, LinkedList<String>>();
     }
 
     public String getSearchterm() {
@@ -137,7 +230,6 @@ implements Serializable
             catch(net.sf.json.JSONException jsonex) {}
         }
         
-        System.out.println(argument);
         return argument;
     }    
 /*
@@ -200,78 +292,122 @@ implements Serializable
             jobject = (JSONObject)elementIter.next();
             String elementFound = (String)jobject.get("name");
             
-            htmlString += "<a href=\"" + jobject.get("url") + "\">" + elementFound + "</a> | ";
+            htmlString += "<a href=\"" + jobject.get("url") + "\" target=\"_new\">" + elementFound + "</a> | ";
+            //relatedBox = relatedBox + "," + jobject.get("url");
+            relatedBox.add((String)jobject.get("url"));
         }
         
         System.out.println(htmlString);
         return htmlString;
     }    
     
+    public boolean getRelatedArguments()
+    throws IOException, Throwable
+    {
+        /*
+        System.out.println("TEst 1");
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println("TEst 2");
+        System.out.println("ARTNO = " + context.getExternalContext().getRequestParameterMap().get("argno"));
+        System.out.println("TEst 3");*/
+        
+        FacesContext context = FacesContext.getCurrentInstance();        
+        HttpServletRequest myRequest = (HttpServletRequest)context.getExternalContext().getRequest();
+        HttpSession mySession = myRequest.getSession();        
+        String argno = (String) myRequest.getParameter("argno");
+
+        LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+        LinkedList ll = new LinkedList();
+        
+        System.out.println("\n\n");
+        System.out.println(argno);
+        System.out.println(listRelatedArgs.get(""+argno));
+        this.relatedArgs = (LinkedList<JSONObject>) lbds.searchRelatedArguments(listRelatedArgs.get(""+argno));
+        
+        context.getExternalContext().redirect("http://localhost:8080/GranatumWidget/jsfs/relatedArgs.jsf");
+        
+        return true;
+    }
+
+    
+    
+    public void presentRelatedArguments()
+    throws Throwable
+    {
+        LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+        LinkedList ll = new LinkedList();
+        ll.add("http://bio2rdf.org/ec:3.1.1.7");
+        ll.add("http://bio2rdf.org/gl:G12854/cr1");        
+        
+        this.relatedArgs = (LinkedList<JSONObject>) lbds.searchRelatedArguments(ll);
+    }
+    
     public boolean getArgumentFromPaper()
     throws IOException, Throwable
     {
         ArgumentDocumentSpace ads = new ArgumentDocumentSpace();
         System.out.println(ads.retrieveArgumentsFromDocument());
-        Iterator iter = ads.retrieveArgumentsFromDocument().getJSONArray("Argumentation").iterator();
-        Iterator agentIter;
+        JSONObject res = ads.retrieveArgumentsFromDocument();
+        Iterator iter = res.getJSONArray("Argumentation").iterator();
+        String argitem;
+        chemoArgsList = new LinkedList<JSONObject>();
+        proteinArgsList = new LinkedList<JSONObject>();
+        int i = 0;
+        
         argumentsList = new LinkedList<JSONObject>();
-        agentNames = new LinkedList<String>();
+
+        this.title = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("Title"));
+        this.url   = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("URL"));
+        this.journal = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("JournalTitle"));
+        this.pid = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("pId"));
 
         while(iter.hasNext())
         {
+            i+=1;
+            this.relatedBox = new LinkedList<String>();            
             JSONObject jsonObject = ((JSONObject)iter.next());
             argumentsList.add(jsonObject);
-            System.out.println(jsonObject.getString("ArgumentSentence"));
-            System.out.println(" ------------ " + jsonObject.getJSONArray("Agents").get(0));            
-//            System.out.println(" ------------ " + jsonObject.getJSONArray("Proteins").get(0));            
-            
-            //colorizeArgument(jsonObject);
-            jsonObject.set("ArgumentSentence", colorizeArgument(jsonObject, new String[]{"Agents", "Proteins"}));
-            try {jsonObject.set("Agents", linkItemsFound(jsonObject.getJSONArray("Agents"))); }
-            catch(net.sf.json.JSONException jsonexa) {jsonObject.set("Agents","");}
-            try { jsonObject.set("Proteins", linkItemsFound(jsonObject.getJSONArray("Proteins"))); }
+
+            argitem = colorizeArgument(jsonObject, new String[]{"Agents", "Proteins"});
+            jsonObject.set("ArgumentSentence", argitem);
+
+            try
+            { 
+                jsonObject.set("Agents", linkItemsFound(jsonObject.getJSONArray("Agents"))); 
+                chemoArgsList.add(jsonObject);
+            }
+            catch(net.sf.json.JSONException jsonexa) {
+                System.out.println("---------------- blank");
+                jsonObject.set("Agents","");
+            }
+            try
+            { 
+                jsonObject.set("Proteins", linkItemsFound(jsonObject.getJSONArray("Proteins")));
+                proteinArgsList.add(jsonObject);
+            }
             catch(net.sf.json.JSONException jsonexb) {jsonObject.set("Proteins","");}
 
-/*
-            agentIter = jsonObject.getJSONArray("Agents").iterator();
-            while(agentIter.hasNext()){
-                String n = (String)(((JSONObject)agentIter.next()).get("Agent"));
-                System.out.println(n);
-                agentNames.add(n);
-            }
-*/
-//            System.out.println(jsonObject.getJSONArray("Agents").getJSONObject(0).getString("Agent"));
+            //jsonObject.set("RelatedBox", this.relatedBox);
+            listRelatedArgs.put(""+i, relatedBox);
+            jsonObject.set("argno", ""+i);
+            System.out.println("\nArg=" + relatedBox + " " + i);
+            
         }
         
-//        System.out.println(" ++++++ " + argumentsList);
         return true;
     }
     
-    public void keywordSearch() throws IOException
-    {/*
-        LinkedBiomedicalDataSpace d = null;
-            
-        try
-        {
-            d = new LinkedBiomedicalDataSpace();
-            d.searchSpecificChemoAgent(searchterm);                
-            argumentsList = (List<JSONObject>) d.getAssociatedEntities();
-            System.out.println(argumentsList);
-        }
-        catch (Throwable ex)
-        {
-            java.util.logging.Logger.getLogger(SearchBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+    public void keywordSearch()
+    throws Throwable
+    {
         ArgumentDocumentSpace ads = new ArgumentDocumentSpace();
-        Iterator iter = ads.retrieveArgumentsFromLinkedDataSpace().getJSONArray("Results").iterator();
+        Iterator iter = ads.retrieveArgumentsFromLinkedDataSpace(this.searchterm).iterator();
         argumentsList = new LinkedList<JSONObject>();
         
         while(iter.hasNext())
         {
             JSONObject jsonObject = ((JSONObject)iter.next());
             argumentsList.add(jsonObject);
-//            System.out.println(jsonObject.getJSONArray("Agents").getJSONObject(0).getString("Agent"));
         }
         
         System.out.println(" ++++++ " + argumentsList);        
@@ -280,10 +416,12 @@ implements Serializable
     public static void main(String[] arg)
     {
         ArgumentBean ab = new ArgumentBean();
+        /*
         try {
             ab.keywordSearch();
         } catch (IOException ex) {
             Logger.getLogger(ArgumentBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
     }
 }

@@ -48,18 +48,20 @@
                  <h:panelGrid columns="1">
 
                      
-                    <rich:dataTable id="searchTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it2"  rows="2" style="width:100%;" >
+                    <rich:dataTable id="searchTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it2"  rows="2" style="width:800px;" >
                     <rich:column>
-
+                        <f:facet name="header">
+                             Search results
+                        </f:facet>   
                         <table cellspacing="3" border="0">                        
                         <tr>
-                            <td><b>Title: </b></td><td>#{args.getString("Title")}</td>
+                            <td><b>Title: </b></td><td>#{args.getString("title")}</td>
                         </tr>
                         <tr>
-                            <td><b>Sentence: </b></td><td><i>#{args.getString("ArgumentSentence")}</i></td>
+                            <td><b>Sentence: </b></td><td><i>#{args.getString("arg")}</i></td>
                         </tr>
                         <tr>
-                            <td><b>Link to document:</b></td><td><h:outputLink value='#{args.getString("URL")}'>#{args.getString("URL")}</h:outputLink></td>                            
+                            <td><b>Link to document:</b></td><td><h:outputLink target="_new" value='#{args.getString("extSource")}'>#{args.getString("extSource")}</h:outputLink></td>                            
                         </tr>        
                     </table>                            
                     </rich:column>                        

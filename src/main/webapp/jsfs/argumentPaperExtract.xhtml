@@ -15,6 +15,42 @@
 
         <h:form>   
             <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
+               
+                <table cellspacing="5" border="0">
+
+                    <tr>
+                        <td>
+                            <b>Title:</b>
+                        </td>
+                        <td>
+                            #{ArgumentBean.title}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Journal:</b>
+                        </td>
+                        <td>
+                            #{ArgumentBean.journal}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>URL:</b>
+                        </td>
+                        <td>
+                            <h:outputLink target="_new" value='#{ArgumentBean.url}'>#{ArgumentBean.url}</h:outputLink>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>PID:</b>
+                        </td>
+                        <td>
+                            <h:outputText value='#{ArgumentBean.pid}' escape="false"/>
+                        </td>
+                    </tr>                    
+                </table>
                 <table cellspacing="5" border="0">
                     <tr>
                         <td>
@@ -30,7 +66,7 @@
                             <span style="background-color:green;">Diseases</span>
                         </td>                        
                     </tr>
-                </table>
+                </table> 
                 
                 <h:panelGrid columns="1">
                      
@@ -56,7 +92,15 @@
                             <td>
                                <h:outputText value='#{args.getString("Agents")}' escape="false"/> 
                             </td>
-                        </tr>                            
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <h:commandLink action='#{ArgumentBean.getRelatedArguments()}' value='Related Arguments'>
+                                    <f:param name="argno" value='#{args.getString("argno")}' />
+                                </h:commandLink>
+                            </td>
+                        </tr>  
                         </table>
                     </rich:column>                        
                     </rich:dataTable>

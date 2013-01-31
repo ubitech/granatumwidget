@@ -13,20 +13,26 @@ public class ArgumentDocumentSpace
     public JSONObject retrieveArgumentsFromDocument()
     throws IOException
     {
-        InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\sampleJsn3.txt");
+        //InputStream is = new FileInputStream("/home/ubiadmin/temp/AnnotationWebAppTmp/jsonOutput.txt");
+        InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\jsonAgntPlProteins2.txt");        
         String jsonTxt = IOUtils.toString(is);        
         JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
 
         return(json);
     }
 
-    public JSONObject retrieveArgumentsFromLinkedDataSpace()
-    throws IOException
+    public Collection retrieveArgumentsFromLinkedDataSpace(String searchterm)
+    throws Throwable
     {
+       /*
         InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\sampleJsn2.txt");
         String jsonTxt = IOUtils.toString(is);        
         JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
         return(json);
+        */
+        LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+        return(lbds.searchArguments(searchterm));
+        
     }    
     
     public static void main(String[] args)
@@ -34,7 +40,7 @@ public class ArgumentDocumentSpace
         ArgumentDocumentSpace a = new ArgumentDocumentSpace();
         try
         {
-            System.out.println(a.retrieveArgumentsFromLinkedDataSpace());
+            System.out.println(a.retrieveArgumentsFromLinkedDataSpace("ca"));
         }   
         catch(Throwable t)
         {

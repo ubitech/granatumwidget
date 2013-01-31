@@ -136,75 +136,15 @@
                             <td><b>Sentence: </b></td><td><i>#{args.getString("ArgumentSentence")}</i></td>
                         </tr>
                         <tr>
-                            <td><b>Link to document:</b></td><td><h:outputLink value='#{args.getString("URL")}'>#{args.getString("URL")}</h:outputLink></td>                            
+                            <td><b>Link to document:</b></td><td><h:outputLink target="_new" value='#{args.getString("URL")}'>#{args.getString("URL")}</h:outputLink></td>
                         </tr>        
                     </table>                            
                     </rich:column>                        
-                    </rich:dataTable>
-
-                        
+                    </rich:dataTable>                        
                     <rich:dataScroller  id="ds2" boundaryControls="hide" fastControls="hide" for="searchTable" maxPages="2"/>
                 </h:panelGrid>
            </h:panelGroup>                
 
-<!--                
-                <h:panelGrid columns="1">
-                    <a4j:repeat id="argumentTable3" value="#{ArgumentBean.argumentsList}" var="args">
-                        <tr>
-                            <td><b>#{args.getString("Title")}</b></td><td><i>#{args.getString("ArgumentSentence")}</i></td>
-                        </tr>
-                        <tr>
-                            <td><b>Link to document:</b></td><td>#{args.getString("URL")}</td>
-                        </tr>
-
-                    </a4j:repeat>
-                </h:panelGrid>
-                </table>    
-            </h:panelGroup>
--->
-<!--                <h:panelGrid columns="1">
-
-                </h:panelGrid>
-
-            </h:panelGroup> 
-
-            <center>
-            <h:panelGroup id="mastergroup3" rendered="#{ArgumentBean.searchtermLength>0}">
-                <rich:panel style="height:300px;width:600px;" rendered="#{ArgumentBean.searchtermLength>0}" >
-                                    <rich:dataTable id="documentsTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it"  rows="2" style="width:100%;">
-                                        <rich:column>
-                                            <f:facet name="header">
-                                                Literature Results
-                                            </f:facet>
-                                            <table border="0">
-                                                <tr>
-                                                    <td><b>Title: </b>
-                                                        <h:outputLink value='#{args.getString("URL")}'>#{args.getString("Title")}</h:outputLink><br/>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Abstract: </b>
-                                                        #{args.getString("Abstract")}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><b>Argument: </b>
-                                                        #{args.getString("ArgumentSentence")}
-                                                    </td>
-                                                </tr>                                                
-                                                <tr>
-                                                    <td><a href="http://www.granatum.org/bscw/bscw.cgi/5342?op=addnote"><img src="http://www.granatum.org/pub/20121016-1445-26968/icons/action_addnotes.gif"/></a>
-                                                    <a href="http://www.granatum.org/bscw/bscw.cgi/5342?op=addtextdocument"><img src="http://www.granatum.org/pub/20121016-1445-26968/icons/action_addoc.gif"/></a></td>
-                                                </tr>
-                                            </table>
-                                        </rich:column>
-                                    </rich:dataTable>
-                <rich:dataScroller  id="ds" boundaryControls="hide" fastControls="hide" for="documentsTable" maxPages="2"/>                                    
-                
-            </rich:panel>
-            </h:panelGroup>
-            </center>
--->
         </h:form>
 
 </a4j:region>
