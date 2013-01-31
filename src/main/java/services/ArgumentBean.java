@@ -316,7 +316,7 @@ implements Serializable
         HttpSession mySession = myRequest.getSession();        
         String argno = (String) myRequest.getParameter("argno");
 
-        LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+        ArgLinkedBiomedicalDataSpace lbds = new ArgLinkedBiomedicalDataSpace();
         LinkedList ll = new LinkedList();
         
         System.out.println("\n\n");
@@ -324,7 +324,7 @@ implements Serializable
         System.out.println(listRelatedArgs.get(""+argno));
         this.relatedArgs = (LinkedList<JSONObject>) lbds.searchRelatedArguments(listRelatedArgs.get(""+argno));
         
-        context.getExternalContext().redirect("http://localhost:8080/GranatumWidget/jsfs/relatedArgs.jsf");
+        context.getExternalContext().redirect("http://192.168.1.202:8080/GranatumWidget/jsfs/relatedArgs.jsf");
         
         return true;
     }
@@ -334,7 +334,7 @@ implements Serializable
     public void presentRelatedArguments()
     throws Throwable
     {
-        LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+        ArgLinkedBiomedicalDataSpace lbds = new ArgLinkedBiomedicalDataSpace();
         LinkedList ll = new LinkedList();
         ll.add("http://bio2rdf.org/ec:3.1.1.7");
         ll.add("http://bio2rdf.org/gl:G12854/cr1");        

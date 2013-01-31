@@ -30,7 +30,7 @@ public class ArgumentDocumentSpace
         JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
         return(json);
         */
-        LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
+        ArgLinkedBiomedicalDataSpace lbds = new ArgLinkedBiomedicalDataSpace();
         return(lbds.searchArguments(searchterm));
         
     }    
