@@ -87,26 +87,120 @@ extends Service
     {
         formalizeQueryString("prefix dc: <http://purl.org/dc/elements/1.1/> " +
                              "prefix ao: <http://hq.ubitech.eu/ArgOntology.owl#> " +
-                             "SELECT ?url ?title ?abstr ?arg  ?extSource " + 
+                             "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+                             "SELECT distinct ?url ?title ?abstr ?arg  ?extSource ?refersto ?uristripped ?name " + 
                              "{ " + 
                              "?u ao:appearsIn ?url. " +
                              "?url dc:title ?title. " +
                              "?url ao:abstract ?abstr. " + 
                              "?url ao:externalsource ?extSource. " +                
                              "?u ao:argumentSentence ?arg. " +
+                             "?u <http://www.w3.org/2000/01/rdf-schema#refersTo> ?refersto. " +
+                             "?refersto rdf:type ?type. " +
+                             "?refersto <http://www.w3.org/2000/01/rdf-schema#label> ?name. " +
+                             "BIND(REPLACE(str(?type), REPLACE(str(?type), \"[^/]*$\", \"\"),\"\") AS ?uristripped). " +
+                             "filter regex(?uristripped,\"protein\",\"i\"). " +
                              "filter regex(?arg,\"" + searchTerm + "\",\"i\"). } limit 5");
 
-        bindingNames = new String[6];
+        bindingNames = new String[9];
         bindingNames[0] = "index";
         bindingNames[1] = "url";
         bindingNames[2] = "title";
         bindingNames[3] = "abstr";
         bindingNames[4] = "arg";
         bindingNames[5] = "extSource";
-
+        bindingNames[6] = "refersto";
+        bindingNames[7] = "uristripped";
+        bindingNames[8] = "name";
+        
         return(getAssociatedEntities());
     }    
 
+    protected Collection getAssociatedEntitiesAndTypes()
+    throws Throwable
+    {
+        StringBuffer msgsock = new StringBuffer();
+        LinkedList<JSONObject> collection = null;
+        String line;
+        String cat, name, bundle;
+        int index = 0;
+        String lineParts[];
+        JSONObject map = new JSONObject();
+        //JSONObject prMap = new JSONObject();
+        map.put("arg", "");
+        
+        URL targetURL = new URL(getServiceURL() + "/query?output=csv&query=" + query);
+        System.out.println(getServiceURL() + "/query?output=csv&query=" + query);
+        collection = new LinkedList<JSONObject>();
+        URLConnection connection = targetURL.openConnection();
+        connection.setDoOutput(true);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())); 
+        String tmpStr;
+        
+        reader.readLine();
+        while((line = reader.readLine()) != null)
+        {
+            System.out.println("1");            
+            System.out.println("LINE= " + line);            
+
+            lineParts = line.split(",");
+ 
+            if(lineParts[1].equals(map.getString("arg")))
+            {
+                try { tmpStr = map.getString("refersto"); }
+                catch(net.sf.json.JSONException jsonexa) { tmpStr = new String(""); }
+                map.put("refersto", tmpStr + "," + lineParts[2]);
+
+                linkify(lineParts[2], map);
+            }
+            else{
+
+                map = new JSONObject();
+                map.put("Void", "");
+                map.put("Protein", "");
+                map.put(bindingNames[0], ""+(index++));
+                
+                for(int i=1;i<bindingNames.length;i++)
+                {
+                    System.out.println("bindingNames.length= " + bindingNames.length);
+                    System.out.println(bindingNames[i] + " " + lineParts[i-1]);
+                    map.put(bindingNames[i], lineParts[i-1]);
+                }
+                /*
+                bundle = this.getURIType(lineParts[2]);
+                System.out.println(lineParts[2] + " - " + bundle);
+                
+                if(!bundle.equals("Void"))
+                {
+                    cat  = bundle.split(",")[0];
+                    //cat = new String("Void");
+                    name = bundle.split(",")[1];
+                }
+                else
+                {
+                    cat  = new String("Void");
+                    name = "name";
+                }                 
+
+                try { tmpStr = map.getString(cat); }
+                catch(net.sf.json.JSONException jsonexb) { tmpStr = new String(""); }
+
+                map.put(cat, tmpStr + "<a href=\"" + lineParts[2] + "\" target=\"_new\">" + name + "</a> | ");
+                System.out.println(" Categoize: cat=" + cat + " name=" + name + "  str=" + tmpStr);
+                */
+                
+                linkify(lineParts[2], map);
+                collection.add(map);
+                System.out.println("2");            
+            }
+        }
+        
+        reader.close();
+        System.out.println("3");
+        return collection;
+    }        
+    
+    
     public Collection searchRelatedArguments(Collection uris)
     throws Throwable
     {
