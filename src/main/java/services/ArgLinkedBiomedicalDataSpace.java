@@ -279,6 +279,17 @@ extends Service
             return new String( ((uri.split("#").length>1) ? uri.split("#")[1] : (uri.split("/")[uri.split("/").length-1] ))+","+name );
         }
     }  
+
+    protected void linkifyExtr(String url, JSONObject map)
+    throws Throwable
+    {
+        String cat, name, bundle, tmpStr;
+        
+        try { tmpStr = map.getString("Agents"); }        
+        catch(net.sf.json.JSONException jsonexb) { tmpStr = new String(""); }
+
+        map.put("Agents", tmpStr + "<a href=\"" + url + "\" target=\"_new\">" + url + "</a> | ");        
+    }        
     
     protected void linkify(String url, JSONObject map)
     throws Throwable
@@ -341,7 +352,7 @@ extends Service
                 catch(net.sf.json.JSONException jsonexa) { tmpStr = new String(""); }
                 map.put("refersto", tmpStr + "," + lineParts[2]);
 
-                linkify(lineParts[2], map);
+                linkifyExtr(lineParts[2], map);
             }
             else{
 
@@ -379,7 +390,7 @@ extends Service
                 System.out.println(" Categoize: cat=" + cat + " name=" + name + "  str=" + tmpStr);
                 */
                 
-                linkify(lineParts[2], map);
+                linkifyExtr(lineParts[2], map);
                 collection.add(map);
                 System.out.println("2");            
             }
