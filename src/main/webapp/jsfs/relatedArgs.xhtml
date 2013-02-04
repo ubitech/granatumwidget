@@ -27,14 +27,14 @@
                                         <tr>
                                             <td><b>Argument Sentence: </b><i>#{rp.getString("arg")}</i></td>
                                         </tr>
+
                                         <tr>
-                                            <td><b>Refersto: </b><i>#{rp.getString("refersto")}</i></td>
-                                        </tr>
-                                        <c:if test='#{rp.get("Protein")!=""}'>                                        
-                                        <tr>
-                                            <td><b>Proteins:</b> <h:outputText value='#{rp.getString("Protein")}' escape="false"/> </td>
+                                            <td><b><h:outputText rendered='#{rp.get("Agents")!=""}' value="Agents"></h:outputText> </b></td>
+                                            <td>
+                                               <h:outputText rendered='#{rp.get("Agents")!=""}' value='#{rp.get("Agents")}' escape="false"/>
+                                            </td>
+                                            
                                         </tr>  
-                                        </c:if>
                                     </table> 
                                     </rich:column>
                                     </rich:dataTable>
