@@ -14,9 +14,6 @@
     <h:form>
 
     <rich:tabPanel switchType="client" style="width:800px;">
-        <h:outputText value='Some Text' escape="false"/>
-        <rich:tab label="All" header="All">
-            
             <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
                
                 <table cellspacing="5" border="0">
@@ -70,7 +67,10 @@
                         </td>                        
                     </tr>
                 </table> 
-                
+        </h:panelGroup>
+        <rich:tab label="All" header="All">
+            
+            <h:panelGroup id="mastergroup4" rendered="true">        
                 <h:panelGrid columns="1">
                      
                     <rich:dataTable id="documentsTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it"  rows="2" style="width:100%;" >
