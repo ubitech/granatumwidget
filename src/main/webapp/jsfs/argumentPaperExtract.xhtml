@@ -13,9 +13,8 @@
     <ui:define name="content">
     <h:form>
 
-    <rich:tabPanel switchType="client" style="width:800px;">
-            <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
-               
+           <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
+               <h:panelGrid columns="1">
                 <table cellspacing="5" border="0">
 
                     <tr>
@@ -67,7 +66,10 @@
                         </td>                        
                     </tr>
                 </table> 
-        </h:panelGroup>
+               </h:panelGrid>
+      </h:panelGroup>
+        
+      <rich:tabPanel switchType="client" style="width:800px;">
         <rich:tab label="All" header="All">
             
             <h:panelGroup id="mastergroup4" rendered="true">        
@@ -113,24 +115,7 @@
         </rich:tab>
         <rich:tab label="Agents" header="Agents">
             <h:panelGroup id="mastergroup2" rendered="true">
-
-                <table cellspacing="5" border="0">
-                    <tr>
-                        <td>
-                            <b>Notation:</b>
-                        </td>
-                        <td>
-                            <span style="background-color:yellow;">Agent</span>
-                        </td>
-                        <td>
-                            <span style="background-color:red;">Protein</span>
-                        </td>
-                        <td>
-                            <span style="background-color:green;">Diseases</span>
-                        </td>                        
-                    </tr>
-                </table> 
-                
+               
                 <h:panelGrid columns="1">
                      
                     <rich:dataTable id="chemodocumentsTable" value="#{ArgumentBean.chemoArgsList}" var="chemoargs" iterationStatusVar="itc"  rows="2" style="width:100%;" >
@@ -158,22 +143,7 @@
         </rich:tab>
         <rich:tab label="Proteins" header="Proteins">
             <h:panelGroup id="mastergroup3" rendered="true">
-                <table cellspacing="5" border="0">
-                    <tr>
-                        <td>
-                            <b>Notation:</b>
-                        </td>
-                        <td>
-                            <span style="background-color:yellow;">Agent</span>
-                        </td>
-                        <td>
-                            <span style="background-color:red;">Protein</span>
-                        </td>
-                        <td>
-                            <span style="background-color:green;">Diseases</span>
-                        </td>                        
-                    </tr>
-                </table> 
+
 
                 <h:panelGrid columns="1">
                      
