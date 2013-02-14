@@ -13,8 +13,9 @@
     <ui:define name="content">
     <h:form>
 
+        <rich:dataTable>
            <h:panelGroup id="mastergroup1" rendered="#{ArgumentBean.getArgumentFromPaper()}">
-               <h:panelGrid columns="1">
+               <h:panelGrid columns="2">
                 <table cellspacing="5" border="0">
 
                     <tr>
@@ -68,6 +69,7 @@
                 </table> 
                </h:panelGrid>
       </h:panelGroup>
+    </rich:dataTable>
         
       <rich:tabPanel switchType="client" style="width:800px;">
         <rich:tab label="All" header="All">
