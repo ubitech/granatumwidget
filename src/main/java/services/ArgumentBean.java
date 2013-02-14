@@ -222,9 +222,11 @@ implements Serializable
     private String colorizeArgument(JSONObject jObject, String[] elementType)
     {
         String argument = jObject.getString("ArgumentSentence");
-
-        this.paperFormatRDFXML+="<arg:argumentSentence>" + argument + "</arg:argumentSentence>";
         
+        this.paperFormatRDFXML+= "<rdf:Description>\n";
+        this.paperFormatRDFXML+="\t<arg:argumentSentence>" + argument + "</arg:argumentSentence>";
+        this.paperFormatRDFXML+= "</rdf:Description>\n";
+
         for(int i=0;i<elementType.length;i++)
         {
             try
@@ -309,7 +311,7 @@ implements Serializable
             
             htmlString += "<a href=\"" + jobject.get("url") + "\" target=\"_new\">" + elementFound + "</a> | ";
             //relatedBox = relatedBox + "," + jobject.get("url");
-            this.paperFormatRDFXML+= "<rdfs:refersTo>" + jobject.get("url") + "</rdfs:refersTo>";
+            this.paperFormatRDFXML+= "<rdfs:refersTo>" + jobject.get("url") + "</rdfs:refersTo>\n";
             relatedBox.add((String)jobject.get("url"));
         }
         
@@ -398,10 +400,12 @@ implements Serializable
                                 "\txmlns:owl=\"http://www.w3.org/2002/07/owl#\"" +
                                 "\txmlns:arg=\"http://hq.ubitech.eu/ArgOntology.owl#\"" +
                                 "\txmlns:gr=\"http://chem.deri.ie/granatum/\"" +
-                                "\txmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n\n";
+                                "\txmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n";
 
-        this.paperFormatRDFXML+= "<gr:title>" + this.title + "</gr:title>\n";
-                                
+        this.paperFormatRDFXML+= "<rdf:Description>\n";
+        this.paperFormatRDFXML+= "\t<gr:title>" + this.title + "/<gr:title>\n";
+        this.paperFormatRDFXML+= "/<rdf:Description>\n";
+        
         while(iter.hasNext())
         {
             i+=1;
