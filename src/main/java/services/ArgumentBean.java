@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.richfaces.event.FileUploadEvent;
 
@@ -42,8 +44,19 @@ implements Serializable
     private String pid = null;
     private String url = null;
     private LinkedList<String> relatedBox = null;
+    private String paperFormatRDFXML = null;
     private HashMap<String, LinkedList<String>> listRelatedArgs = null;
 
+    public String getPaperFormatRDFXML() {
+        return paperFormatRDFXML;
+    }
+
+    public void setPaperFormatRDFXML(String paperFormatRDFXML) {
+        this.paperFormatRDFXML = paperFormatRDFXML;
+    }
+
+    
+    
     public List<JSONObject> getProteinArgsList() {
         return proteinArgsList;
     }
@@ -209,6 +222,8 @@ implements Serializable
     private String colorizeArgument(JSONObject jObject, String[] elementType)
     {
         String argument = jObject.getString("ArgumentSentence");
+
+        this.paperFormatRDFXML+="<arg:argumentSentence>" + argument + "</arg:argumentSentence>";
         
         for(int i=0;i<elementType.length;i++)
         {
@@ -294,12 +309,27 @@ implements Serializable
             
             htmlString += "<a href=\"" + jobject.get("url") + "\" target=\"_new\">" + elementFound + "</a> | ";
             //relatedBox = relatedBox + "," + jobject.get("url");
+            this.paperFormatRDFXML+= "<rdfs:refersTo>" + jobject.get("url") + "</rdfs:refersTo>";
             relatedBox.add((String)jobject.get("url"));
         }
         
         System.out.println(htmlString);
         return htmlString;
     }    
+
+    public boolean getRDFDoc()
+    throws IOException
+    {
+        FacesContext context = FacesContext.getCurrentInstance();        
+        HttpServletResponse myResponse = (HttpServletResponse)context.getExternalContext().getResponse();
+        
+        PrintWriter pw = myResponse.getWriter();
+        pw.println(this.paperFormatRDFXML);
+        pw.flush();
+        pw.close();
+        
+        return true;
+    }
     
     public boolean getRelatedArguments()
     throws IOException, Throwable
@@ -354,6 +384,7 @@ implements Serializable
         proteinArgsList = new LinkedList<JSONObject>();
         int i = 0;
         
+        this.paperFormatRDFXML = new String("");
         argumentsList = new LinkedList<JSONObject>();
 
         this.title = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("Title"));
@@ -361,6 +392,16 @@ implements Serializable
         this.journal = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("JournalTitle"));
         this.pid = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("pId"));
 
+        this.paperFormatRDFXML = "<rdf:RDF xmlns=\"http://chem.deri.ie/granatum/\"" +
+                                "\txmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"" +
+                                "\txmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"" +
+                                "\txmlns:owl=\"http://www.w3.org/2002/07/owl#\"" +
+                                "\txmlns:arg=\"http://hq.ubitech.eu/ArgOntology.owl#\"" +
+                                "\txmlns:gr=\"http://chem.deri.ie/granatum/\"" +
+                                "\txmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n\n";
+
+        this.paperFormatRDFXML+= "<gr:title>" + this.title + "</gr:title>\n";
+                                
         while(iter.hasNext())
         {
             i+=1;
@@ -394,6 +435,7 @@ implements Serializable
             
         }
         
+        this.paperFormatRDFXML+="</rdf:RDF>";
         return true;
     }
     
