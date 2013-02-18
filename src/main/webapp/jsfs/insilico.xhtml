@@ -22,7 +22,8 @@
                     <td><h:commandButton id="search" value="Submit" action="#{InSilicoBean.doSearch}" styleClass="submitButton"/></td>
                 </tr>
             </table>
-
+        </h:form>   
+        <h:form>
             <h:panelGroup id="mastergroup2" rendered="#{InSilicoBean.hasResult}">
                 <h:panelGrid columns="1">
                     <table>
