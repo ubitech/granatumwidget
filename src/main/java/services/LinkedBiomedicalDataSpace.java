@@ -329,6 +329,26 @@ extends Service
 
         return(getAssociatedEntities());
     }    
+
+    public Collection searchSpecificMoleculeByRules(String molweight, String coefficient)
+    throws Throwable
+    {
+        formalizeQueryString("SELECT ?mol ?label ?smile ?sameas WHERE " + 
+                             "{ ?mol a <http://chem.deri.ie/granatum/Molecule>. " +
+                             "?mol <http://www.w3.org/2000/01/rdf-schema#label> ?label. " + 
+                             "?mol <http://bio2rdf.org/ns/bio2rdf#smiles> ?smile. " +
+                             "?mol <http://bio2rdf.org/ns/bio2rdf#sameAs> ?sameas. " +
+                             " } limit " + maxReturnedResults);
+
+        bindingNames = new String[5];
+        bindingNames[0] = "index";
+        bindingNames[1] = "mol";
+        bindingNames[2] = "label";
+        bindingNames[3] = "smile";
+        bindingNames[4] = "sameas";
+
+        return(getAssociatedEntities());
+    }    
     
     public Collection searchSpecificMolecule(String searchTerm)
     throws Throwable
