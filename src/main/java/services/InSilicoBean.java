@@ -15,9 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
+import org.apache.xerces.impl.dv.util.Base64;
 
 @ManagedBean(name = "InSilicoBean")
-@SessionScoped
+@RequestScoped
 public class InSilicoBean 
 {
 
@@ -95,10 +96,10 @@ public class InSilicoBean
         HttpServletRequest myRequest = (HttpServletRequest)context.getExternalContext().getRequest();
         HttpServletResponse myResponse = (HttpServletResponse)context.getExternalContext().getResponse();        
         HttpSession mySession = myRequest.getSession();        
-        String csvfile = (String) myRequest.getParameter("csvfile");
+
         String homeFolder = (String) myRequest.getParameter("homeFolder");
         
-        myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=text");
+        myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
         
         return true;
     }
