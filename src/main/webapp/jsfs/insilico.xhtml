@@ -26,16 +26,13 @@
             <h:panelGroup id="mastergroup2" rendered="#{InSilicoBean.hasResult}">
                 <h:panelGrid columns="1">
                     <table>
-                        <tr>
-                            <td>Molecule</td><td>Number Residence</td><td>Molecular Weight</td>
-                        </tr>                            
+                     <td>Molecule</td><td>Number Residence</td><td>Molecular Weight</td>
+                          
+                    </table>                          
                    
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
-                        <tr>
                             <td><h:outputText value='#{mol.get("mol")}'/>,</td><td><h:outputText value='#{mol.get("molnumres")}'/>,</td><td><h:outputText value='#{mol.get("molweight")}'/></td>
-                        </tr>
                     </rich:list>
-                    </table>                          
                     <a href='#{InSilicoBean.galaxyFileLoaderURL}' target="_new">Sent to Galaxy</a>
                 </h:panelGrid>
             </h:panelGroup>  
