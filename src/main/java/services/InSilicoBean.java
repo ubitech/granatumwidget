@@ -72,6 +72,7 @@ public class InSilicoBean
         {
             d.searchSpecificMoleculeByRules(molweight, coefficient);
             molResults = (List<JSONObject>) d.getAssociatedEntities();
+            this.hasResult = true;
         } 
         catch (Throwable ex)
         {
