@@ -38,6 +38,12 @@
         <servlet-class>services.Clusterusers</servlet-class>
     </servlet>
 
+
+    <servlet>
+        <servlet-name>InSilico</servlet-name>
+        <servlet-class>services.InSilico</servlet-class>
+    </servlet>
+
     <servlet>
         <servlet-name>Keyplayers</servlet-name>
         <servlet-class>services.Keyplayers</servlet-class>
@@ -72,7 +78,12 @@
         <servlet-name>Search</servlet-name>
         <url-pattern>/Search</url-pattern>
     </servlet-mapping>    
- 
+
+     <servlet-mapping>
+        <servlet-name>InSilico</servlet-name>
+        <url-pattern>/InSilico</url-pattern>
+    </servlet-mapping>  
+   
     <servlet-mapping>
         <servlet-name>RelatedTopics</servlet-name>
         <url-pattern>/RelatedTopics</url-pattern>
