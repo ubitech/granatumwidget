@@ -19,11 +19,20 @@ public class InSilicoBean
     String molweight;
     String coefficient;
     boolean hasResult;
+    String galaxyFileLoaderURL = "http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize";
     private List<JSONObject> molResults;    
 
     public InSilicoBean() {
     }
 
+    public String getGalaxyFileLoaderURL() {
+        return galaxyFileLoaderURL;
+    }
+
+    public void setGalaxyFileLoaderURL(String galaxyFileLoaderURL) {
+        this.galaxyFileLoaderURL = galaxyFileLoaderURL;
+    }    
+    
     public int getMolLength() {
         return molLength;
     }
