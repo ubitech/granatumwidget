@@ -88,7 +88,7 @@ public class InSilicoBean
         this.hasResult = hasResult;
     }
 
-    public void sentToWorkflowTool()
+    public boolean sentToWorkflowTool()
     throws IOException
     {
         FacesContext context = FacesContext.getCurrentInstance();        
@@ -99,6 +99,8 @@ public class InSilicoBean
         String homeFolder = (String) myRequest.getParameter("homeFolder");
         
         myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=text");
+        
+        return true;
     }
     
     public void doSearch()

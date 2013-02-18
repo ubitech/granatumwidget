@@ -59,7 +59,7 @@ extends HttpServlet
             }
             else if(operation.equals("storeDoc"))
             {                
-                String searchid = oauthClient.uploadFileFromURL(request.getParameter("homeFolder"), "test", "granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc",oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
+                String searchid = oauthClient.uploadFileFromURL(request.getParameter("homeFolder"), "test", "http://granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc", oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
                 this.forwardToPage("http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize&searchid=" + searchid, request, response);
             }
             else if(operation.equals("exposeDoc"))
