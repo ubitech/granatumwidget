@@ -5,13 +5,19 @@ import javax.faces.bean.RequestScoped;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 @ManagedBean(name = "InSilicoBean")
-@RequestScoped
+@SessionScoped
 public class InSilicoBean 
 {
 
@@ -19,10 +25,19 @@ public class InSilicoBean
     String molweight;
     String coefficient;
     boolean hasResult;
+    String csvfile;
     String galaxyFileLoaderURL = "http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize";
     private List<JSONObject> molResults;    
 
     public InSilicoBean() {
+    }
+
+    public String getCsvfile() {
+        return csvfile;
+    }
+
+    public void setCsvfile(String csvfile) {
+        this.csvfile = csvfile;
     }
 
     public String getGalaxyFileLoaderURL() {
@@ -72,7 +87,20 @@ public class InSilicoBean
     public void setHasResult(boolean hasResult) {
         this.hasResult = hasResult;
     }
-   
+
+    public void sentToWorkflowTool()
+    throws IOException
+    {
+        FacesContext context = FacesContext.getCurrentInstance();        
+        HttpServletRequest myRequest = (HttpServletRequest)context.getExternalContext().getRequest();
+        HttpServletResponse myResponse = (HttpServletResponse)context.getExternalContext().getResponse();        
+        HttpSession mySession = myRequest.getSession();        
+        String csvfile = (String) myRequest.getParameter("csvfile");
+        String homeFolder = (String) myRequest.getParameter("homeFolder");
+        
+        myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=text");
+    }
+    
     public void doSearch()
     {
         LinkedBiomedicalDataSpace d = new LinkedBiomedicalDataSpace();
@@ -81,6 +109,7 @@ public class InSilicoBean
         {
             d.searchSpecificMoleculeByRules(molweight, coefficient);
             molResults = (List<JSONObject>) d.getAssociatedEntities();
+            this.csvfile = d.getCsvfile();
             this.hasResult = true;
         } 
         catch (Throwable ex)

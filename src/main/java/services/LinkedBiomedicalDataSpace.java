@@ -24,6 +24,15 @@ extends Service
     private String bindingNames[];
     private static LinkedBiomedicalDataSpace instance;
     private static int maxReturnedResults = 5;
+    private String csvfile;
+
+    public String getCsvfile() {
+        return csvfile;
+    }
+
+    public void setCsvfile(String csvfile) {
+        this.csvfile = csvfile;
+    }        
     
     public LinkedBiomedicalDataSpace()
     {       
@@ -395,6 +404,7 @@ extends Service
         int index = 0;
         String lineParts[];
         JSONObject map;
+        JSONObject cfile = new JSONObject();
         JSONObject list = new JSONObject();
         
         URL targetURL = new URL(getServiceURL() + query);
@@ -403,9 +413,11 @@ extends Service
         connection.setDoOutput(true);
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())); 
 
+        csvfile = new String("");
         reader.readLine();
         while((line = reader.readLine()) != null)
         {
+            csvfile = csvfile + line + "\n";
             System.out.println("1");            
             System.out.println(line);            
             map = new JSONObject();
