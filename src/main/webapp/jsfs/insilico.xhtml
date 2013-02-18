@@ -10,7 +10,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"   >
 
     <ui:define name="content">
-        <h:form>
+        <h:form id="sub">
             <table>
                 <tr>
                     <td>Molecule Weight</td><td><h:inputText id="molweight" value="#{InSilicoBean.molweight}" styleClass="inputbox" size="30"/></td>
@@ -19,11 +19,11 @@
                     <td>Partition Coefficient</td><td><h:inputText id="coeff" value="#{InSilicoBean.coefficient}" styleClass="inputbox" size="30"/></td>
                 </tr>                    
                 <tr>
-                                        <h:commandButton id="export" action='#{InSilicoBean.sentToWorkflowTool}' value='Export' styleClass="submitButton"/>
+                    <td><h:commandButton id="search" value="Submit" action="#{InSilicoBean.doSearch}" styleClass="submitButton"/></td>
                 </tr>
             </table>
         </h:form>
-        <h:form>
+        <h:form id="exp">
             <h:panelGroup id="mastergroup2" rendered="#{InSilicoBean.hasResult}">
                 <h:panelGrid columns="1">
                     <table>
@@ -33,6 +33,7 @@
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
                             <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molnumres")}'/>,<h:outputText value='#{mol.get("molweight")}'/>
                     </rich:list>
+                    <h:commandButton id="export" action='#{InSilicoBean.sentToWorkflowTool}' value='Export' styleClass="submitButton"/>
                     
                 </h:panelGrid>
             </h:panelGroup>  
