@@ -92,6 +92,7 @@ public class InSilicoBean
     public boolean sentToWorkflowTool()
     throws IOException
     {
+        System.out.println("In sentToWorkflowTool");
         FacesContext context = FacesContext.getCurrentInstance();        
         HttpServletRequest myRequest = (HttpServletRequest)context.getExternalContext().getRequest();
         HttpServletResponse myResponse = (HttpServletResponse)context.getExternalContext().getResponse();        

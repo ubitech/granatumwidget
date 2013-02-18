@@ -32,7 +32,6 @@
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
                             <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molnumres")}'/>,<h:outputText value='#{mol.get("molweight")}'/>
                     </rich:list>
-                    #{InSilicoBean.csvfile}
                     <h:commandButton action='#{InSilicoBean.sentToWorkflowTool()}' value='Export' styleClass="submitButton"/>
                     
                 </h:panelGrid>
