@@ -67,6 +67,7 @@ extends HttpServlet
             {
                 String csvfile = request.getParameter("csvfile");
                 PrintWriter pw = response.getWriter();
+                System.out.println(Base64.decode(csvfile));
                 pw.println(Base64.decode(csvfile));
                 pw.flush();
                 pw.close();
