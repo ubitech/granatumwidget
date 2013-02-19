@@ -6,6 +6,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import org.apache.xerces.impl.dv.util.Base64;
 @ManagedBean(name = "InSilicoBean")
 @ViewScoped
 public class InSilicoBean 
+implements Serializable
 {
 
     int molLength = 0;
