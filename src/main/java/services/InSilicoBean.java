@@ -6,12 +6,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +18,8 @@ import net.sf.json.JSONObject;
 import org.apache.xerces.impl.dv.util.Base64;
 
 @ManagedBean(name = "InSilicoBean")
-@ViewScoped
+@RequestScoped
 public class InSilicoBean 
-implements Serializable
 {
 
     int molLength = 0;
