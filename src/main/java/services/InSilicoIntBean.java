@@ -89,7 +89,7 @@ public class InSilicoIntBean
         this.hasResult = hasResult;
     }
 
-    public void sentToWorkflowTool()
+    public String sentToWorkflowTool()
     throws IOException
     {
         System.out.println("In sentToWorkflowTool");
