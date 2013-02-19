@@ -16,6 +16,7 @@ extends HttpServlet
     private final String consumerKey    = "Ubitech_Annotator";
     private final String consumerSecret = "67f079a9d0538024956855912406435b";    
     private String homeFolder = null;
+    private String csvfile = null;
     
     private OAuthBasicClient oauthClient = null;
 
@@ -61,12 +62,12 @@ extends HttpServlet
             else if(operation.equals("storeDoc"))
             {                
                 
-                String searchid = oauthClient.uploadFileFromURL(homeFolder, "test" , "http://granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc&csvfile="+request.getParameter("csvfile"), oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
+                String searchid = oauthClient.uploadFileFromURL(homeFolder, "test" , "http://granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc", oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
                 this.forwardToPage("http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize&searchid=" + searchid, request, response);
             }
             else if(operation.equals("exposeDoc"))
             {
-                String csvfile = request.getParameter("csvfile");
+                //String csvfile = request.getParameter("csvfile");
                 PrintWriter pw = response.getWriter();
                 System.out.println(new String(Base64.decode(csvfile)));
                 pw.println(new String(Base64.decode(csvfile)));
