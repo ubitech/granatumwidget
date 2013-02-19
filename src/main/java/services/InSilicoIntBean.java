@@ -106,6 +106,7 @@ public class InSilicoIntBean
         
         myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
         
+        return "";
     }
     
     public void doSearch()
