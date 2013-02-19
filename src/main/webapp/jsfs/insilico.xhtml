@@ -39,7 +39,7 @@
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
                             <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molnumres")}'/>,<h:outputText value='#{mol.get("molweight")}'/>
                     </rich:list>
-                    <h:commandButton id="export" action='#{InSilicoIntBean.sentToWorkflowTool}' value='Export' styleClass="submitButton">
+                    <h:commandButton id="export" action='./InSilico?op=storeDoc' value='Export' styleClass="submitButton">
                         <f:param name="csvfile" value='#{InSilicoBean.csvfile}' />
                     </h:commandButton>                    
                 </h:panelGrid>
