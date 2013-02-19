@@ -89,7 +89,7 @@ public class InSilicoIntBean
         this.hasResult = hasResult;
     }
 
-    public String sentToWorkflowTool()
+    public void sentToWorkflowTool()
     throws IOException
     {
         System.out.println("In sentToWorkflowTool");
@@ -106,7 +106,6 @@ public class InSilicoIntBean
         
         myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
         
-        return "";
     }
     
     public void doSearch()
