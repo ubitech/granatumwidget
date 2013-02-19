@@ -60,6 +60,7 @@ extends HttpServlet
             }
             else if(operation.equals("storeDoc"))
             {                
+                
                 String searchid = oauthClient.uploadFileFromURL(homeFolder, "test" , "http://granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc&csvfile="+request.getParameter("csvfile"), oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
                 this.forwardToPage("http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize&searchid=" + searchid, request, response);
             }
@@ -67,8 +68,8 @@ extends HttpServlet
             {
                 String csvfile = request.getParameter("csvfile");
                 PrintWriter pw = response.getWriter();
-                System.out.println(Base64.decode(csvfile));
-                pw.println(Base64.decode(csvfile));
+                System.out.println(new String(Base64.decode(csvfile)));
+                pw.println(new String(Base64.decode(csvfile)));
                 pw.flush();
                 pw.close();
             }
