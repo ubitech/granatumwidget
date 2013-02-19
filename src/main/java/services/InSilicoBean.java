@@ -121,7 +121,7 @@ public class InSilicoBean
             molResults = (List<JSONObject>) d.getAssociatedEntities();
             this.csvfile = Base64.encode(d.getCsvfile().getBytes("UTF-8"));
             this.hasResult = true;
-            myResponse.sendRedirect("./jsfs/insilicoResults.jsf");
+            myResponse.sendRedirect("./insilicoResults.jsf");
         } 
         catch (Throwable ex)
         {
