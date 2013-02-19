@@ -112,7 +112,7 @@ public class InSilicoBean
         {
             d.searchSpecificMoleculeByRules(molweight, coefficient);
             molResults = (List<JSONObject>) d.getAssociatedEntities();
-            this.csvfile = d.getCsvfile();
+            this.csvfile = Base64.encode(d.getCsvfile().getBytes("UTF-8"));
             this.hasResult = true;
         } 
         catch (Throwable ex)
