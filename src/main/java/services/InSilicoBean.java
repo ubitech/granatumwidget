@@ -18,7 +18,7 @@ import net.sf.json.JSONObject;
 import org.apache.xerces.impl.dv.util.Base64;
 
 @ManagedBean(name = "InSilicoBean")
-@RequestScoped
+@SessionScoped
 public class InSilicoBean 
 {
 
