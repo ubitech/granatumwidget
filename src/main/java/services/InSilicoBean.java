@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,7 @@ import net.sf.json.JSONObject;
 import org.apache.xerces.impl.dv.util.Base64;
 
 @ManagedBean(name = "InSilicoBean")
-@RequestScoped
+@ViewScoped
 public class InSilicoBean 
 {
 
@@ -88,7 +89,7 @@ public class InSilicoBean
     public void setHasResult(boolean hasResult) {
         this.hasResult = hasResult;
     }
-/*
+
     public void sentToWorkflowTool()
     throws IOException
     {
@@ -103,7 +104,7 @@ public class InSilicoBean
         myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
         
     }
-  */  
+
     public void doSearch()
     {
         LinkedBiomedicalDataSpace d = new LinkedBiomedicalDataSpace();
