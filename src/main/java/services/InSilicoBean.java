@@ -104,7 +104,7 @@ public class InSilicoBean
         System.out.println("-----------");   
         String homeFolder = (String) myRequest.getParameter("homeFolder");
         
-        myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
+        myResponse.sendRedirect("../InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
         
     }
 
