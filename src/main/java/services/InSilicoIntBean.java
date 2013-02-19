@@ -17,9 +17,9 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 import org.apache.xerces.impl.dv.util.Base64;
 
-@ManagedBean(name = "InSilicoBean")
+@ManagedBean(name = "InSilicoIntBean")
 @RequestScoped
-public class InSilicoBean 
+public class InSilicoIntBean 
 {
 
     int molLength = 0;
@@ -30,7 +30,7 @@ public class InSilicoBean
     String galaxyFileLoaderURL = "http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize";
     private List<JSONObject> molResults;    
 
-    public InSilicoBean() {
+    public InSilicoIntBean() {
     }
 
     public String getCsvfile() {
@@ -88,7 +88,7 @@ public class InSilicoBean
     public void setHasResult(boolean hasResult) {
         this.hasResult = hasResult;
     }
-/*
+
     public void sentToWorkflowTool()
     throws IOException
     {
@@ -103,7 +103,7 @@ public class InSilicoBean
         myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
         
     }
-  */  
+    
     public void doSearch()
     {
         LinkedBiomedicalDataSpace d = new LinkedBiomedicalDataSpace();
@@ -117,7 +117,7 @@ public class InSilicoBean
         } 
         catch (Throwable ex)
         {
-            java.util.logging.Logger.getLogger(InSilicoBean.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InSilicoIntBean.class.getName()).log(Level.SEVERE, null, ex);
         }
             
     }
