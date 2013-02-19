@@ -21,30 +21,13 @@
                 <tr>
                     <td>
                         <h:commandButton id="search" value="Submit" action="#{InSilicoBean.doSearch}" styleClass="submitButton">
-                            <f:ajax render=":exp"/>
+
                         </h:commandButton>
                     </td>
                 </tr>
             </table>
         </h:form>
-        <h:form id="exp">        
-            <h:panelGroup id="mastergroup2" rendered="#{InSilicoBean.hasResult}">
 
-
-                <h:panelGrid columns="1">
-                    <table>
-                      <td>Molecule,</td><td>Number Residence,</td><td>Molecular Weight</td>                          
-                    </table>                          
-                   
-                    <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
-                            <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molnumres")}'/>,<h:outputText value='#{mol.get("molweight")}'/>
-                    </rich:list>
-                    <h:commandButton id="export" action='./InSilico?op=storeDoc' value='Export' styleClass="submitButton">
-                        <f:param name="csvfile" value='#{InSilicoBean.csvfile}' />
-                    </h:commandButton>                    
-                </h:panelGrid>
-            </h:panelGroup>  
-    </h:form>
 
     </ui:define>
 </ui:composition>

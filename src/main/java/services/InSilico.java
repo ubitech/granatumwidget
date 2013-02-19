@@ -15,7 +15,8 @@ extends HttpServlet
 {
     private final String consumerKey    = "Ubitech_Annotator";
     private final String consumerSecret = "67f079a9d0538024956855912406435b";    
-
+    private String homeFolder = null;
+    
     private OAuthBasicClient oauthClient = null;
 
     public InSilico()
@@ -40,7 +41,7 @@ extends HttpServlet
             if(operation==null)
             {
                 oauthClient = new OAuthBasicClient(consumerKey, consumerSecret);        
-                
+                homeFolder = request.getParameter("homeFolder");
                 oauthClient.requestTokensOAuth();
                 System.out.println("oauth 1 st step " + oauthClient.getOauthToken());
                 response.sendRedirect(oauthClient.getOauthAuthTokenURL()
@@ -55,18 +56,18 @@ extends HttpServlet
             {
                 oauthClient.requestAccessOAuth(new String(Base64.decode(request.getParameter("a1"))), new String(Base64.decode(request.getParameter("a2"))));
                 if(oauthClient.getOauthTokenAccess()!=null)
-                    this.forwardToPage("/jsfs/insilico.jsf?" + request.getParameter("homeFolder"), request, response);
+                    this.forwardToPage("/jsfs/insilico.jsf?homeFolder=" + request.getParameter("homeFolder"), request, response);
             }
             else if(operation.equals("storeDoc"))
             {                
-                String searchid = oauthClient.uploadFileFromURL(request.getParameter("homeFolder"), "test", "http://granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc", oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
+                String searchid = oauthClient.uploadFileFromURL(homeFolder, "test" , "http://granatum.ubitech.eu/GranatumWidget/InSilico?op=exposeDoc&csvfile="+request.getParameter("csvfile"), oauthClient.getOauthTokenAccess(), oauthClient.getOauthTokenSecretAccess());
                 this.forwardToPage("http://lisis.cs.ucy.ac.cy:9000/GRANATUMFileLoader_widget.py?action=authorize&searchid=" + searchid, request, response);
             }
             else if(operation.equals("exposeDoc"))
             {
                 String csvfile = request.getParameter("csvfile");
                 PrintWriter pw = response.getWriter();
-                pw.println(csvfile);
+                pw.println(Base64.decode(csvfile));
                 pw.flush();
                 pw.close();
             }

@@ -98,6 +98,10 @@ public class InSilicoBean
         HttpServletResponse myResponse = (HttpServletResponse)context.getExternalContext().getResponse();        
         HttpSession mySession = myRequest.getSession();        
 
+        this.csvfile = new String(Base64.decode((String) myRequest.getParameter("csvfile")));
+        System.out.println("-----------");
+        System.out.println(this.csvfile);
+        System.out.println("-----------");   
         String homeFolder = (String) myRequest.getParameter("homeFolder");
         
         myResponse.sendRedirect("./InSilico?op=storeDoc&csvfile=" + Base64.encode(this.csvfile.getBytes("UTF-8")));
@@ -107,13 +111,17 @@ public class InSilicoBean
     public void doSearch()
     {
         LinkedBiomedicalDataSpace d = new LinkedBiomedicalDataSpace();
-
+        FacesContext context = FacesContext.getCurrentInstance();        
+        HttpServletRequest myRequest = (HttpServletRequest)context.getExternalContext().getRequest();
+        HttpServletResponse myResponse = (HttpServletResponse)context.getExternalContext().getResponse();
+        
         try
         {
             d.searchSpecificMoleculeByRules(molweight, coefficient);
             molResults = (List<JSONObject>) d.getAssociatedEntities();
             this.csvfile = Base64.encode(d.getCsvfile().getBytes("UTF-8"));
             this.hasResult = true;
+            myResponse.sendRedirect("./jsfs/insilicoResults.jsf");
         } 
         catch (Throwable ex)
         {
