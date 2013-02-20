@@ -13,8 +13,8 @@ import org.apache.xerces.impl.dv.util.Base64;
 public class InSilico
 extends HttpServlet
 {
-    private final String consumerKey    = "Ubitech_Annotator";
-    private final String consumerSecret = "67f079a9d0538024956855912406435b";    
+    private final String consumerKey    = "UBITECH - InSilico";
+    private final String consumerSecret = "5e9a1792486d50ff34ff59b085f87439";    
     private String homeFolder = null;
     private String csvfile = null;
     
