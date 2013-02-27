@@ -20,7 +20,7 @@
                     </table>                          
                    
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
-                            <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molnumres")}'/>,<h:outputText value='#{mol.get("molweight")}'/>
+                            <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molWt")}'/>,<h:outputText value='#{mol.get("mol_label")}'/>,<h:outputText value='#{mol.get("smileStringIsomeric")}'/>, ,<h:outputText value='#{mol.get("chebiMol")}'/>
                     </rich:list>
                     <h:commandButton id="export" action='#{InSilicoBean.sentToWorkflowTool}' value='Export' styleClass="submitButton">
                         <f:param name="csvfile" value='#{InSilicoBean.csvfile}' />
