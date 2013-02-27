@@ -342,19 +342,24 @@ extends Service
     public Collection searchSpecificMoleculeByRules(String molweight, String coefficient)
     throws Throwable
     {
-        formalizeQueryString("SELECT ?mol ?molnumres ?molweight "+
-                             "WHERE " +
+        formalizeQueryString("Select ?mol ?mol_label ?molWt ?smileStringIsomeric ?chebiMol " +
+                             "WHERE " + 
                              "{ " +
                              "?mol a <http://chem.deri.ie/granatum/Molecule>. " +
-                             "?mol <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/numberOfResidues> ?molnumres. " +
-                             "?mol <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/molecularWeight> ?molweight. " +
-                             " } limit " + maxReturnedResults);
+                             "?mol <http://www.w3.org/2000/01/rdf-schema#label> ?mol_label . " +
+                             "?mol <http://chem.deri.ie/granatum/molecularWeight> ?molWt . " +
+                             "?mol <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/smilesStringIsomeric> ?smileStringIsomeric . " +
+                             "?mol <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/chebiId> ?chebiMol . "+
+                             "FILTER( <http://www.w3.org/2001/XMLSchema#double>( ?molWt ) >= " + molweight +  "). " +
+                             "} limit " + maxReturnedResults);
 
-        bindingNames = new String[4];
+        bindingNames = new String[6];
         bindingNames[0] = "index";
         bindingNames[1] = "mol";
-        bindingNames[2] = "molnumres";
-        bindingNames[3] = "molweight";
+        bindingNames[2] = "mol_label";
+        bindingNames[3] = "molWt";
+        bindingNames[4] = "smileStringIsomeric";
+        bindingNames[5] = "chebiMol";
 
         return(getAssociatedEntities());
     }    
@@ -446,7 +451,7 @@ extends Service
         try {        
         
             LinkedBiomedicalDataSpace d = new LinkedBiomedicalDataSpace();            
-            System.out.println(d.searchRelatedPublications(args));
+            System.out.println(d.searchSpecificMoleculeByRules("1200.2", "4"));
             
         } catch (Throwable ex) {
             Logger.getLogger(LinkedBiomedicalDataSpace.class.getName()).log(Level.SEVERE, null, ex);
