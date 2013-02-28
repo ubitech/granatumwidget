@@ -22,9 +22,9 @@
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
                             <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molWt")}'/>,<h:outputText value='#{mol.get("mol_label")}'/>,<h:outputText value='#{mol.get("chebiMol")}'/>
                     </rich:list>
-                    <h:commandButton id="export" action='#{InSilicoBean.sentToWorkflowTool}' value='Export' styleClass="submitButton">
+                    <h:commandLink id="export" action='#{InSilicoBean.sentToWorkflowTool}' value='Export' styleClass="submitButton" target="_new">
                         <f:param name="csvfile" value='#{InSilicoBean.csvfile}' />
-                    </h:commandButton>                    
+                    </h:commandLink>                    
                 </h:panelGrid>
             </h:panelGroup>  
     </h:form>
