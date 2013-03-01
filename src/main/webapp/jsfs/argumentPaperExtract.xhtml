@@ -33,21 +33,7 @@
                             #{ArgumentBean.journal}
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <b>URL:</b>
 
-                            <h:outputLink target="_new" value='#{ArgumentBean.url}'>#{ArgumentBean.url}</h:outputLink>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>PID:</b>
-                        </td>
-                        <td>
-                            <h:outputText value='#{ArgumentBean.pid}' escape="false"/>
-                        </td>
-                    </tr>
                     <tr>
                         <td>
                             <h:commandLink action='#{ArgumentBean.getRDFDoc()}' value='Link To document RDF'>                                    
@@ -66,9 +52,7 @@
                         <td>
                             <span style="background-color:red;">Protein</span>
                         </td>
-                        <td>
-                            <span style="background-color:green;">Diseases</span>
-                        </td>                        
+                      
                     </tr>
                 </table> 
                </h:panelGrid>
