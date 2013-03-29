@@ -37,14 +37,23 @@
 	h4{          
 		font-size:120%;
 		}				
-	a{
+/*	a{
 		text-decoration:none;
 		color:#fff;
 		}
-	a:hover{
-		color:#d8e6ec;
-		text-decoration:underline;
-		}							
+*/
+                a:link, a:visited, a:focus, a:active {
+                    color: black;
+                }
+                a:link, a:visited, a:focus, a:active {
+                    text-decoration: none;
+                }
+                a:link, a:visited, a:focus, a:active, a:hover {
+                    color: #285979 !important;
+                }
+                a:link, a:visited, a:focus, a:active, a:hover {
+                    font-weight: bold;
+                }							
 	p{
 		margin:1em 0;
 		}		
