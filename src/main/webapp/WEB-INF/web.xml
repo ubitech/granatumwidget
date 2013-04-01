@@ -50,6 +50,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>Arg</servlet-name>
+        <servlet-class>services.Arg</servlet-class>
+    </servlet>
+    
+    <servlet>
         <servlet-name>Search</servlet-name>
         <servlet-class>services.Search</servlet-class>
     </servlet>
@@ -68,6 +73,11 @@
         <servlet-name>Clusterusers</servlet-name>
         <url-pattern>/Clusterusers</url-pattern>
     </servlet-mapping>   
+
+    <servlet-mapping>
+        <servlet-name>Arg</servlet-name>
+        <url-pattern>/Arg</url-pattern>
+    </servlet-mapping> 
 
     <servlet-mapping>
         <servlet-name>Keyplayers</servlet-name>
