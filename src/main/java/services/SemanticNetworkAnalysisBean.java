@@ -143,7 +143,20 @@ implements Serializable
             for(int i=0;i<oarray.length;i++)
             {
                 JSONObject keyplayerObject = (JSONObject)oarray[i];
-                keyplayerObject.put("prank_symbol", "test");
+                
+                if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==0)
+                    keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_0.png");
+                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<50)
+                    keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_1.png");
+                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))>=50  &&
+                        Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<75)
+                    keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_2.png");
+                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))>=75  &&
+                        Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<100)
+                    keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_3.png");                
+                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==100)
+                    keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_4.png");
+                
                 this.keyplayersList.add(keyplayerObject);
             }
             

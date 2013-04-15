@@ -16,7 +16,7 @@
                 <h:panelGrid columns="1">
                     <rich:list id="playersTable" value="#{SemanticNetworkAnalysisBean.keyplayersList}" var="player" rows="#{SemanticNetworkAnalysisBean.keyplayersLength}">
                         
-                        <h:outputLink target="_new" value='http://www.granatum.org/bscw/bscw.cgi/#{player.get("id")}'>#{player.get("name")}</h:outputLink> | <img src="http://www.granatum.org/pub/static/icons/social/prank_4.png"/> PersonRank: #{player.get("personRank").get("rank")} | #{player.get("prank_symbol")}
+                        <h:outputLink target="_new" value='http://www.granatum.org/bscw/bscw.cgi/#{player.get("id")}'>#{player.get("name")}</h:outputLink> | <img src='#{player.get("prank_symbol")}'/> PersonRank: #{player.get("personRank").get("rank")} 
                     </rich:list>
                 </h:panelGrid>
             </h:panelGroup>  
