@@ -47,8 +47,11 @@ extends HttpServlet
             else if(operation.equals("reqAccessOAuth"))
             {
                 oauthClient.requestAccessOAuth(new String(Base64.decode(request.getParameter("a1"))), new String(Base64.decode(request.getParameter("a2"))));
+                String homeID = new String(oauthClient.getHomeDirectory());
+                System.out.println("homeid=" + homeID);
+                
                 if(oauthClient.getOauthTokenAccess()!=null)
-                    this.forwardToPage("/jsfs/mainScreen.jsf", request, response);
+                    this.forwardToPage("/jsfs/mainScreen.jsf?homeID=" + homeID, request, response);
             }
         } 
         catch(Throwable t)

@@ -92,7 +92,11 @@
                                     <f:param name="argno" value='#{args.getString("argno")}' />
                                 </h:commandLink>
                             </td>
-                        </tr>  
+                        </tr>
+                        <tr>
+                            <td><a href='http://www.granatum.org/bscw/bscw.cgi/#{ArgumentBean.homeID}?op=addnote&amp;name=#{args.getString("ArgumentSentence")}' target="_new"><img src="http://www.granatum.org/pub/static/icons/action_addnotes.gif"/></a>
+                            <a href='http://www.granatum.org/bscw/bscw.cgi/#{ArgumentBean.homeID}?op=addtextdocument&amp;name=#{args.getString("ArgumentSentence")}' target="_new"><img src="http://www.granatum.org/pub/static/icons/action_addoc.gif"/></a></td>
+                        </tr>                                                                    
                         </table>
                     </rich:column>                        
                     </rich:dataTable>

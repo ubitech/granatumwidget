@@ -47,6 +47,15 @@ implements Serializable
     private String paperFormatRDFXML = null;
     private HashMap<String, LinkedList<String>> listRelatedArgs = null;
 
+    private String homeID;
+
+    public String gethomeID()
+    {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        this.homeID = (String) facesContext.getExternalContext().getRequestParameterMap().get("homeID");
+        return this.homeID;
+    }       
+    
     public String getPaperFormatRDFXML() {
         return paperFormatRDFXML;
     }

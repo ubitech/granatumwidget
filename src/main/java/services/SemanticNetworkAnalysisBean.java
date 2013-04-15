@@ -144,7 +144,7 @@ implements Serializable
             for(int i=0;i<oarray.length;i++)
             {
                 JSONObject keyplayerObject = (JSONObject)oarray[i];
-                System.out.println("SOUT:   " + ((JSONObject)keyplayerObject.get("personRank")).get("rank"));
+                //System.out.println("SOUT:   " + ((JSONObject)keyplayerObject.get("personRank")).get("rank"));
                 rank = (Integer)((JSONObject)keyplayerObject.get("personRank")).get("rank");
                 
                 if(rank==0)
