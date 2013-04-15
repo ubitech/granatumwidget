@@ -143,7 +143,7 @@ implements Serializable
             for(int i=0;i<oarray.length;i++)
             {
                 JSONObject keyplayerObject = (JSONObject)oarray[i];
-                System.out.println("SOUT:   " + (String)((JSONObject)keyplayerObject.get("personRank")).get("rank"));
+                System.out.println("SOUT:   " + ((JSONObject)keyplayerObject.get("personRank")).get("rank"));
                 /*
                 if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==0)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_0.png");
