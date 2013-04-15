@@ -144,7 +144,7 @@ implements Serializable
             {
                 JSONObject keyplayerObject = (JSONObject)oarray[i];
                 System.out.println("SOUT:   " + (String)((JSONObject)keyplayerObject.get("personRank")).get("rank"));
-                
+                /*
                 if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==0)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_0.png");
                 else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<50)
@@ -157,7 +157,7 @@ implements Serializable
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_3.png");                
                 else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==100)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_4.png");
-                
+                */
                 this.keyplayersList.add(keyplayerObject);
             }
             
