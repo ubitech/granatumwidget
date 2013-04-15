@@ -141,8 +141,12 @@ implements Serializable
             oarray = jobject.getJSONArray("object").toArray();
         
             for(int i=0;i<oarray.length;i++)
-                this.keyplayersList.add((JSONObject)oarray[i]);
-
+            {
+                JSONObject keyplayerObject = (JSONObject)oarray[i];
+                keyplayerObject.put("prank_symbol", "test");
+                this.keyplayersList.add(keyplayerObject);
+            }
+            
             System.out.println(" ----- " + this.userID);
         }
     }    

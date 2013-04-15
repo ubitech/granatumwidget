@@ -31,7 +31,7 @@ implements Serializable
         FacesContext facesContext = FacesContext.getCurrentInstance();
         this.homeID = (String) facesContext.getExternalContext().getRequestParameterMap().get("homeID");
         return this.homeID;
-    }    
+    }        
     
     public String getConf() {
         return conf;

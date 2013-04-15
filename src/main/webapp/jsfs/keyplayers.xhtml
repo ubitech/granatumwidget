@@ -7,13 +7,15 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich"
                 template="/templates/template.xhtml"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions"   >
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"   
+                xmlns:c="http://java.sun.com/jstl/core_rt">
     <ui:define name="content">
 
         #{SemanticNetworkAnalysisBean.getKeyPlayers()}
         <h:panelGroup id="mastergroup2" rendered="#{SemanticNetworkAnalysisBean.errorOccured==false}">
                 <h:panelGrid columns="1">
                     <rich:list id="playersTable" value="#{SemanticNetworkAnalysisBean.keyplayersList}" var="player" rows="#{SemanticNetworkAnalysisBean.keyplayersLength}">
+                        
                         <h:outputLink target="_new" value='http://www.granatum.org/bscw/bscw.cgi/#{player.get("id")}'>#{player.get("name")}</h:outputLink> | <img src="http://www.granatum.org/pub/static/icons/social/prank_4.png"/> PersonRank: #{player.get("personRank").get("rank")}
                     </rich:list>
                 </h:panelGrid>
