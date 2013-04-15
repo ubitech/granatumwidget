@@ -139,25 +139,25 @@ implements Serializable
             this.errorOccured = false;
             this.keyplayersList = new LinkedList<JSONObject>();
             oarray = jobject.getJSONArray("object").toArray();
-        
+            Integer rank = null;
+            
             for(int i=0;i<oarray.length;i++)
             {
                 JSONObject keyplayerObject = (JSONObject)oarray[i];
                 System.out.println("SOUT:   " + ((JSONObject)keyplayerObject.get("personRank")).get("rank"));
-                /*
-                if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==0)
+                rank = (Integer)((JSONObject)keyplayerObject.get("personRank")).get("rank");
+                
+                if(rank==0)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_0.png");
-                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<50)
+                else if(rank<50)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_1.png");
-                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))>=50  &&
-                        Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<75)
+                else if(rank>=50 && rank<75)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_2.png");
-                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))>=75  &&
-                        Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))<100)
+                else if(rank>=75 && rank<100)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_3.png");                
-                else if(Integer.parseInt((String)((JSONObject)keyplayerObject.get("personRank")).get("rank"))==100)
+                else if(rank==100)
                     keyplayerObject.put("prank_symbol", "http://www.granatum.org/pub/static/icons/social/prank_4.png");
-                */
+
                 this.keyplayersList.add(keyplayerObject);
             }
             
