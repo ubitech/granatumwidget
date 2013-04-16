@@ -116,7 +116,7 @@ implements Serializable
     {
 //        this.getUserSearchPreferences();
         
-        searchterms = searchString.split(",");
+        searchterms = searchString.split("_");
         LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
         relatedPublicationList = (List<JSONObject>)lbds.searchRelatedPublications(searchterms);
         //relatedPublicationList = (List<JSONObject>) lbds.getAssociatedEntities();

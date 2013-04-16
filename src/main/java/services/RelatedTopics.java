@@ -49,11 +49,11 @@ extends HttpServlet
                 oauthClient.requestAccessOAuth(new String(Base64.decode(request.getParameter("a1"))), new String(Base64.decode(request.getParameter("a2"))));
                 String homeID = new String(oauthClient.getHomeDirectory());
                 System.out.println("homeid=" + homeID);
-                search = oauthClient.getTopics("5339").replace(' ', ',');
+                search = oauthClient.getTopics("5339").replace(' ', '_');
                 
                 System.out.println(search);
                 if(oauthClient.getOauthTokenAccess()!=null)
-                    this.forwardToPage("/jsfs/relatedIssues.jsf" + "?homeID=" + homeID + "&search=cancer," + search, request, response);
+                    this.forwardToPage("/jsfs/relatedIssues.jsf" + "?homeID=" + homeID + "&search=cancer_" + search, request, response);
             }
         } 
         catch(Throwable t)
