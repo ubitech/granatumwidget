@@ -67,7 +67,7 @@ extends Service
                           "where { ?uri a <http://chem.deri.ie/granatum/PublishedWork>. " +
                           "?uri <http://chem.deri.ie/granatum/title> ?title. filter (";
         
-        for(i=1;i<searchTerms.length-1;i++)
+        for(i=1;(i<searchTerms.length-1) && (i<2) ;i++)
         {
             queryStr += " regex(?title,\"" + searchTerms[i] + "\",\"i\") ||";
         }
