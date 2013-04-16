@@ -13,9 +13,9 @@
     <ui:define name="content">
 <!--      <h:form> -->
 
-            <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}">
+            <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}" style="width:400px;">
 
-                <rich:panel style="height:300px;width:600px;" rendered="#{RelatedInformationBean.conf=='1'}" >
+
                                     #{RelatedInformationBean.userRelatedPublications}
                                     <!--<a4j:repeat id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp">-->
                                     <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7" style="width:100%;">
@@ -38,7 +38,7 @@
                                     </rich:column>
                                     </rich:dataTable>
                                     <rich:dataScroller boundaryControls="hide" fastControls="hide" for="relatedPublicationTable" maxPages="5" />
-                      </rich:panel>                                
+
             </h:panelGrid>
 <!--    </h:form> -->
     </ui:define>
