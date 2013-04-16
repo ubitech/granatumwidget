@@ -112,6 +112,16 @@ implements Serializable
     public String getUserRelatedPublications()
     throws Throwable
     {
+        String[] tmpArray = null;
+        String s = null;
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        s = (String) facesContext.getExternalContext().getRequestParameterMap().get("homeID");
+        tmpArray =  s.split("_");
+        this.homeID = tmpArray[0];
+        this.searchterms = tmpArray;
+        System.out.println("SOUT = " + this.homeID);
+        
         System.out.println("SOUT search= " + this.searchterms.length);
         this.getUserSearchPreferences();
         
