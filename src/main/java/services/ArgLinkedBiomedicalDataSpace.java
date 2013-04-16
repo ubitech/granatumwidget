@@ -27,9 +27,8 @@ extends Service
     
     public ArgLinkedBiomedicalDataSpace()
     {       
-//            setServiceURL("http://srvgal78.deri.ie:8080/graph/Granatum/sparql?output=CSV&query=");
-                setServiceURL("http://192.168.1.202:3030/ds");
-
+            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum/sparql?output=CSV&query=");
+//                setServiceURL("http://192.168.1.202:3030/ds");
     }
 
     private void formalizeQueryString(String query)
@@ -85,33 +84,12 @@ extends Service
     public Collection searchArguments(String searchTerm)
     throws Throwable
     {
-        formalizeQueryString("prefix dc: <http://purl.org/dc/elements/1.1/> " +
-                             "prefix ao: <http://hq.ubitech.eu/ArgOntology.owl#> " +
-                             "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                             "SELECT distinct ?url ?title ?abstr ?arg  ?extSource ?refersto ?uristripped ?name " + 
-                             "{ " + 
-                             "?u ao:appearsIn ?url. " +
-                             "?url dc:title ?title. " +
-                             "?url ao:abstract ?abstr. " + 
-                             "?url ao:externalsource ?extSource. " +                
-                             "?u ao:argumentSentence ?arg. " +
-                             "?u <http://www.w3.org/2000/01/rdf-schema#refersTo> ?refersto. " +
-                             "?refersto rdf:type ?type. " +
-                             "?refersto <http://www.w3.org/2000/01/rdf-schema#label> ?name. " +
-                             "BIND(REPLACE(str(?type), REPLACE(str(?type), \"[^/]*$\", \"\"),\"\") AS ?uristripped). " +
-                             "filter regex(?uristripped,\"protein\",\"i\"). " +
-                             "filter regex(?arg,\"" + searchTerm + "\",\"i\"). } limit 5");
+        formalizeQueryString("SELECT distinct ?pw ?title WHERE {  ?pw a <http://chem.deri.ie/granatum/PublishedWork>. ?pw <http://chem.deri.ie/granatum/title> ?title. filter regex (?title,\""+ searchTerm +"\", \"i\").} limit 3");
 
-        bindingNames = new String[9];
+        bindingNames = new String[3];
         bindingNames[0] = "index";
-        bindingNames[1] = "url";
+        bindingNames[1] = "pw";
         bindingNames[2] = "title";
-        bindingNames[3] = "abstr";
-        bindingNames[4] = "arg";
-        bindingNames[5] = "extSource";
-        bindingNames[6] = "refersto";
-        bindingNames[7] = "uristripped";
-        bindingNames[8] = "name";
         
         return(getAssociatedEntities());
     }    

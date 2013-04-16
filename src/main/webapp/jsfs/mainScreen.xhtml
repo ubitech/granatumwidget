@@ -48,7 +48,7 @@
                  <h:panelGrid columns="1">
 
                      
-                    <rich:dataTable id="searchTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it2"  rows="2" style="width:800px;" >
+                    <rich:dataTable id="searchTable" value="#{ArgumentBean.argumentsList}" var="args" iterationStatusVar="it2"  rows="2"  >
                     <rich:column>
                         <f:facet name="header">
                              Search results
@@ -58,14 +58,8 @@
                             <td><b>Title: </b></td><td>#{args.getString("title")}</td>
                         </tr>
                         <tr>
-                            <td><b>Sentence: </b></td><td><i>#{args.getString("arg")}</i></td>
+                            <td><b>Link to document:</b></td><td><h:outputLink target="_new" value='#{args.getString("pw")}'>#{args.getString("pw")}</h:outputLink></td>
                         </tr>
-                        <tr>
-                            <td><b>Link to document:</b></td><td><h:outputLink target="_new" value='#{args.getString("extSource")}'>#{args.getString("extSource")}</h:outputLink></td>                            
-                        </tr>
-                        <tr>
-                            <td><b>Protein:</b></td><td><h:outputLink target="_new" value='#{args.getString("extSource")}'>#{args.getString("name")}</h:outputLink></td>                            
-                        </tr>                                    
                     </table>                            
                     </rich:column>                        
                     </rich:dataTable>
