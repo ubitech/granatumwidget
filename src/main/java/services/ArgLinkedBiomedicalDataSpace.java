@@ -27,7 +27,7 @@ extends Service
     
     public ArgLinkedBiomedicalDataSpace()
     {       
-            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum/sparql?output=CSV&query=");
+            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum");
 //                setServiceURL("http://192.168.1.202:3030/ds");
     }
 
@@ -107,8 +107,8 @@ extends Service
         //JSONObject prMap = new JSONObject();
         map.put("arg", "");
         
-        URL targetURL = new URL(getServiceURL() + "/query?output=csv&query=" + query);
-        System.out.println(getServiceURL() + "/query?output=csv&query=" + query);
+        URL targetURL = new URL(getServiceURL() + "/sparql?output=csv&query=" + query);
+        System.out.println(getServiceURL() + "/sparql?output=csv&query=" + query);
         collection = new LinkedList<JSONObject>();
         URLConnection connection = targetURL.openConnection();
         connection.setDoOutput(true);
