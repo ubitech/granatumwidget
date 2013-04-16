@@ -63,7 +63,7 @@ extends Service
     {
         formalizeQueryString("select distinct ?uri ?title " +
                              "where { ?uri a <http://chem.deri.ie/granatum/PublishedWork>. " +
-                             "?uri <http://chem.deri.ie/granatum/title> ?title. } limit 2");
+                             "?uri <http://chem.deri.ie/granatum/title> ?title. } limit 4");
 //                             "filter regex(?title,\"" + searchTerms[0] + "\",\"i\").} limit 5");
 
         bindingNames = new String[3];        

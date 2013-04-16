@@ -327,7 +327,7 @@ public class OAuthBasicClient
               method.setRequestHeader("Content-Type", "text/xml");                
               method.setRequestHeader("User-Agent", "Apache XML RPC 3.1.3 (Jakarta Commons httpclient Transport)");
               method.setRequestHeader("Authorization", "OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\""+ "\", oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + oauthTokenSecretAccess + "\",oauth_signature=\"" + consumerSecret + "%26" +  oauthTokenAccess + "\",oauth_timestamp=" + oauthTimestamp);
-              System.out.println("OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\"Ubitech_Annotator\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + oauthTokenSecretAccess + "\",oauth_signature=\"" + consumerSecret + "%26"+  oauthTokenAccess + "\",oauth_timestamp=" + oauthTimestamp);
+              //System.out.println("OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\"Ubitech_Annotator\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + oauthTokenSecretAccess + "\",oauth_signature=\"" + consumerSecret + "%26"+  oauthTokenAccess + "\",oauth_timestamp=" + oauthTimestamp);
 
               reqString = new String("<?xml version='1.0' encoding='UTF-8'?>\n<methodCall>\n<methodName>get_attributes</methodName>\n"
                       + "<params/>\n" 

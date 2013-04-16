@@ -14,32 +14,8 @@
 <!--      <h:form> -->
 
             <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}">
-                        <rich:panel style="width:110px;"  >
-                            <a4j:outputPanel id="tabs" layout="block">
-                                <table border="0">
-                                    <tr>
-                                        <td>
-                                            <a4j:outputPanel layout="block" >
-                                                <rich:toggleControl event="click" targetPanel="resultsPanel" targetItem="documentsPanel" />
-                                                <h:outputLink class="grmenulink" >Publications</h:outputLink>
-                                            </a4j:outputPanel>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <a4j:outputPanel layout="block">
-                                                <rich:toggleControl event="click" targetPanel="resultsPanel" targetItem="assaysPanel"  />
-                                                <h:outputLink class="grmenulink" >Assays</h:outputLink>
-                                            </a4j:outputPanel>
-                                        </td>
-                                    </tr>
-                                     </table>
-                        </a4j:outputPanel>
-                        </rich:panel>
 
                 <rich:panel style="height:300px;width:600px;" rendered="#{RelatedInformationBean.conf=='1'}" >
-                            <rich:togglePanel id="resultsPanel"  render="tabs" switchType="client">
-                                <rich:togglePanelItem name="documentsPanel">
                                     #{RelatedInformationBean.userRelatedPublications}
                                     <!--<a4j:repeat id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp">-->
                                     <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7" style="width:100%;">
@@ -62,33 +38,6 @@
                                     </rich:column>
                                     </rich:dataTable>
                                     <rich:dataScroller boundaryControls="hide" fastControls="hide" for="relatedPublicationTable" maxPages="5" />
-                             </rich:togglePanelItem>  
-
-                             <rich:togglePanelItem name="assaysPanel">
-                                 #{RelatedInformationBean.userRelatedAssays}
-                                 <rich:dataTable id="relatedAssaysTable" value="#{RelatedInformationBean.relatedAssaysList}" var="ap" iterationStatusVar="at"  rows="7" style="width:100%;">
-                                    <rich:column>
-                                    <table cellspacing="0" border="0">
-                                        <tr>
-                                            <td><b>Title: </b><i>#{ap.getString("title")}</i></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Link: </b><h:outputLink target="_new" value='#{ap.getString("uri")}'>#{ap.getString("uri")}</h:outputLink></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href='http://www.granatum.org/bscw/bscw.cgi/#{RelatedInformationBean.homeID}?op=addnote&amp;name=#{ap.getString("title")}' target="_new"><img src="http://www.granatum.org/pub/static/icons/action_addnotes.gif"/></a>
-                                            <a href='http://www.granatum.org/bscw/bscw.cgi/#{RelatedInformationBean.homeID}?op=addtextdocument&amp;name=#{ap.getString("title")}' target="_new"><img src="http://www.granatum.org/pub/static/icons/action_addoc.gif"/></a></td>
-                                        </tr>                                        
-                                    </table> 
-                                    </rich:column> 
-                                    </rich:dataTable>
-                                    <rich:dataScroller boundaryControls="hide" fastControls="hide" for="relatedAssaysTable" maxPages="5" />
-                             </rich:togglePanelItem>  
-
-                                                               
-                            </rich:togglePanel>
-                                
-                      </rich:panel>                                
 
             </h:panelGrid>
 <!--    </h:form> -->
