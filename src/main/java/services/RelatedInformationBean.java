@@ -104,17 +104,17 @@ implements Serializable
         this.searchterms = searchterms;
     }
 
-/*
+
     public void getUserSearchPreferences()
     {
-        this.searchString = new String("a,sam");
+        this.searchString = new String("a_sam");
     }
-  */
+  
     
     public String getUserRelatedPublications()
     throws Throwable
     {
-//        this.getUserSearchPreferences();
+        this.getUserSearchPreferences();
         
         searchterms = searchString.split("_");
         LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
