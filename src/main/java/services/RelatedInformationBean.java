@@ -37,6 +37,7 @@ implements Serializable
     {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         this.searchString = (String) facesContext.getExternalContext().getRequestParameterMap().get("search");
+        System.out.println("SOUT = " + this.searchString);
         return this.searchString;
     }        
     
