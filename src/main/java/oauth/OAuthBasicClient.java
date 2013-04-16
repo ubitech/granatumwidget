@@ -370,6 +370,70 @@ public class OAuthBasicClient
         return new String(getValueFromXMLResponse(respString, 0));
     }
     
+
+    public String getTopics(String id)
+    {
+        int statusCode = 0;
+        String reqString = null;
+        String respString = null;
+                
+        HttpClient client = new HttpClient();
+        PostMethod method = new PostMethod(oauthExecTokenURL);
+
+        while(statusCode!=200 && statusCode != 500)
+        {
+            try
+            {
+              method.setRequestHeader("Content-Type", "text/xml");                
+              method.setRequestHeader("User-Agent", "Apache XML RPC 3.1.3 (Jakarta Commons httpclient Transport)");
+              method.setRequestHeader("Authorization", "OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\""+ "\", oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + oauthTokenSecretAccess + "\",oauth_signature=\"" + consumerSecret + "%26" +  oauthTokenAccess + "\",oauth_timestamp=" + oauthTimestamp);
+              //System.out.println("OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\"Ubitech_Annotator\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + oauthTokenSecretAccess + "\",oauth_signature=\"" + consumerSecret + "%26"+  oauthTokenAccess + "\",oauth_timestamp=" + oauthTimestamp);
+
+              reqString = new String("<?xml version='1.0' encoding='UTF-8'?>\n<methodCall>\n<methodName>get_attributes</methodName>\n"
+                      + "<params>\n"
+                      + "<param>\n<value>" + id + "</value>\n</param>\n"
+                      + "<param>\n<value><array><data><value>bscw:keywords</value></data></array></value>\n</param>\n"
+                      + "</params>\n" 
+                      + "</methodCall>");
+
+              
+              method.setRequestEntity(new StringRequestEntity(reqString,"text/xml","UTF-8"));
+              statusCode = client.executeMethod(method);
+              byte[] responseBody = method.getResponseBody();
+              respString = new String(responseBody);
+
+              if (statusCode == 200)
+              {
+                    System.out.println("respString=" + respString);
+              }
+              else if(statusCode == 401)
+              {
+                    System.out.println("respString=" + respString);
+                    oauthTimestamp = Integer.parseInt((reqString.split(":")[0].split("=")[1]).substring(1, reqString.split(":")[0].split("=")[1].length()-1));
+                    oauthTimedelta = Integer.parseInt(reqString.split(":")[1].trim().split(" ")[1]);
+                    oauthTimestamp = Math.abs(oauthTimedelta) + oauthTimestamp + 1;
+              }
+            }
+            catch (HttpException e)
+            {
+                System.err.println("Fatal protocol violation: " + e.getMessage());
+                e.printStackTrace();
+            } 
+        
+            catch (IOException e)
+            {
+                System.err.println("Fatal transport error: " + e.getMessage());
+                e.printStackTrace();
+            } 
+            finally
+            {
+                method.releaseConnection();
+            }
+        }
+                
+        return new String(getValueFromXMLResponse(respString, 0));
+    }
+    
     
     public String getValueFromXMLResponse(String xmlData, int index)
     {

@@ -49,7 +49,7 @@ extends HttpServlet
                 oauthClient.requestAccessOAuth(new String(Base64.decode(request.getParameter("a1"))), new String(Base64.decode(request.getParameter("a2"))));
                 String homeID = new String(oauthClient.getHomeDirectory());
                 System.out.println("homeid=" + homeID);
-                
+                System.out.println(oauthClient.getTopics("5339"));
                 if(oauthClient.getOauthTokenAccess()!=null)
                     this.forwardToPage("/jsfs/relatedIssues.jsf" + "?homeID=" + homeID , request, response);
             }
