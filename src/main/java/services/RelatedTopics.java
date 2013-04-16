@@ -54,7 +54,7 @@ extends HttpServlet
                 System.out.println(search);
                 */
                 if(oauthClient.getOauthTokenAccess()!=null)
-                    this.forwardToPage("/jsfs/relatedIssues.jsf" + "?homeID=" + homeID , request, response);
+                    this.forwardToPage("/jsfs/relatedIssues.jsf" + "?search=test&homeID=" + homeID , request, response);
             }
         } 
         catch(Throwable t)

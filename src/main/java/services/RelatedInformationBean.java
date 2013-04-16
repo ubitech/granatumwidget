@@ -30,6 +30,7 @@ implements Serializable
     {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         this.homeID = (String) facesContext.getExternalContext().getRequestParameterMap().get("homeID");
+        System.out.println("SOUT = " + this.homeID);        
         return this.homeID;
     }        
 
@@ -114,6 +115,7 @@ implements Serializable
     public String getUserRelatedPublications()
     throws Throwable
     {
+        System.out.println("SOUT search= " + this.searchString);
         this.getUserSearchPreferences();
         
         searchterms = searchString.split("_");
