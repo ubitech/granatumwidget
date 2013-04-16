@@ -18,7 +18,7 @@
 
                                     #{RelatedInformationBean.userRelatedPublications}
                                     <!--<a4j:repeat id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp">-->
-                                    <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7" style="width:100%;">
+                                    <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7" >
                                     <rich:column>
                                     <f:facet name="header">
                                         Related Material
@@ -37,7 +37,6 @@
                                     </table> 
                                     </rich:column>
                                     </rich:dataTable>
-                                    <rich:dataScroller boundaryControls="hide" fastControls="hide" for="relatedPublicationTable" maxPages="5" />
 
             </h:panelGrid>
 <!--    </h:form> -->
