@@ -25,13 +25,21 @@ implements Serializable
     private String searchString = null;
 
     private String homeID;
-
+    
     public String gethomeID()
     {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         this.homeID = (String) facesContext.getExternalContext().getRequestParameterMap().get("homeID");
         return this.homeID;
     }        
+
+    public String getSearch()
+    {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        this.searchString = (String) facesContext.getExternalContext().getRequestParameterMap().get("search");
+        return this.searchString;
+    }        
+    
     
     public String getConf() {
         return conf;
@@ -95,23 +103,18 @@ implements Serializable
         this.searchterms = searchterms;
     }
 
-    public String getSearchString() {
-        return searchString;
-    }
-
-    public void setSearchString(String searchString) {
-        this.searchString = searchString;
-    }
-    
+/*
     public void getUserSearchPreferences()
     {
         this.searchString = new String("a,sam");
     }
+  */
     
     public String getUserRelatedPublications()
     throws Throwable
     {
-        this.getUserSearchPreferences();
+//        this.getUserSearchPreferences();
+        
         searchterms = searchString.split(",");
         LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
         relatedPublicationList = (List<JSONObject>)lbds.searchRelatedPublications(searchterms);
@@ -123,7 +126,7 @@ implements Serializable
     public String getUserRelatedAssays()
     throws Throwable
     {
-        this.getUserSearchPreferences();        
+        //this.getUserSearchPreferences();        
         searchterms = searchString.split(",");
         LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
         relatedAssaysList = (List<JSONObject>) lbds.searchRelatedAssays(searchterms);
