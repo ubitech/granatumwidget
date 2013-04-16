@@ -123,7 +123,7 @@ implements Serializable
         System.out.println("SOUT = " + this.homeID);
         
         System.out.println("SOUT search= " + this.searchterms.length);
-        this.getUserSearchPreferences();
+        //this.getUserSearchPreferences();
         
         //searchterms = searchString.split("_");
         LinkedBiomedicalDataSpace lbds = new LinkedBiomedicalDataSpace();
