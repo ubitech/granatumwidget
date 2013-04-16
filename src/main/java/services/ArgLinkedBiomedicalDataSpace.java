@@ -463,8 +463,8 @@ extends Service
         JSONObject list = new JSONObject();
         
 //        URL targetURL = new URL(getServiceURL() + query);
-        URL targetURL = new URL(getServiceURL() + "/query?output=csv&query=" + query);
-        System.out.println(getServiceURL() + "/query?output=csv&query=" + query);        
+        URL targetURL = new URL(getServiceURL() + "/sparql?output=csv&query=" + query);
+        System.out.println(getServiceURL() + "/sparql?output=csv&query=" + query);        
         collection = new LinkedList<JSONObject>();
         URLConnection connection = targetURL.openConnection();
         connection.setDoOutput(true);
