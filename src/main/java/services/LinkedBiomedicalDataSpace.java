@@ -61,9 +61,21 @@ extends Service
     public Collection searchRelatedPublications(String[] searchTerms)
     throws Throwable
     {
-        formalizeQueryString("select distinct ?uri ?title " +
-                             "where { ?uri a <http://chem.deri.ie/granatum/PublishedWork>. " +
-                             "?uri <http://chem.deri.ie/granatum/title> ?title. } limit 4");
+        int i;
+        
+        String queryStr = "select distinct ?uri ?title " +
+                          "where { ?uri a <http://chem.deri.ie/granatum/PublishedWork>. " +
+                          "?uri <http://chem.deri.ie/granatum/title> ?title. filter (";
+        
+        for(i=1;i<searchTerms.length-1;i++)
+        {
+            queryStr += " regex(?title,\"" + searchTerms[i] + "\",\"i\") ||";
+        }
+        
+        queryStr += " regex(?title,\"" + searchTerms[i] + "\",\"i\") ";
+        
+        queryStr += " ). } limit 6";
+        formalizeQueryString(queryStr);
 //                             "filter regex(?title,\"" + searchTerms[0] + "\",\"i\").} limit 5");
 
         bindingNames = new String[3];        
