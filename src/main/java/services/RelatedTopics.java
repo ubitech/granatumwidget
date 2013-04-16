@@ -40,7 +40,7 @@ extends HttpServlet
                                     + "&oauth_token=" + oauthClient.getOauthToken() + "&"
                                     + "oauth_callback=" + java.net.URLEncoder.encode(request.getRequestURL().toString()
                                     + "?op=reqAccessOAuth" 
-                                    //+ "&userID=" + request.getParameter("userID")
+                                    + "&userID=" + request.getParameter("userID")
                                     + "&a1=" + Base64.encode((oauthClient.getOauthToken()).getBytes("UTF-8")) 
                                     + "&a2=" + Base64.encode((oauthClient.getOauthTokenSecret()).getBytes("UTF-8"))));
             }
@@ -48,8 +48,8 @@ extends HttpServlet
             {
                 oauthClient.requestAccessOAuth(new String(Base64.decode(request.getParameter("a1"))), new String(Base64.decode(request.getParameter("a2"))));
                 String homeID = new String(oauthClient.getHomeDirectory());
-                System.out.println("homeid=" + homeID);
-                search = oauthClient.getTopics("5339").replace(' ', '_');
+                System.out.println(request.getParameter("userID") + " homeid=" + homeID);
+                search = oauthClient.getTopics(request.getParameter("userID")).replace(' ', '_');
                 
                 System.out.println(search);
 
