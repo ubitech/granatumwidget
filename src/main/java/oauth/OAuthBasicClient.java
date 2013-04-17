@@ -453,7 +453,7 @@ public class OAuthBasicClient
             t.printStackTrace();
         }     
         
-        return ((handler.getValues().size()<index)? new String("") : handler.getValues().get(index));
+        return ((handler.getValues().size()<=index)? new String("") : handler.getValues().get(index));
     }
     
     public static void main(String[] args)
