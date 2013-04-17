@@ -71,8 +71,9 @@ extends Service
         {
             queryStr += " regex(?title,\"" + searchTerms[i] + "\",\"i\") ||";
         }
-        
-        queryStr += " regex(?title,\"" + searchTerms[i] + "\",\"i\") ";
+    
+        if(!searchTerms[i].equals(""))
+            queryStr += " regex(?title,\"" + searchTerms[i] + "\",\"i\") ";
         
         queryStr += " ). } limit 6";
         formalizeQueryString(queryStr);
