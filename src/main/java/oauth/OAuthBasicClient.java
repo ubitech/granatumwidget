@@ -18,6 +18,7 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpParams;
 import org.apache.xerces.impl.dv.util.Base64;
 import java.io.StringReader;
+import java.util.Random;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
@@ -42,7 +43,8 @@ public class OAuthBasicClient
     protected String oauthToken = null;
     protected String oauthTokenSecretAccess = null;
     protected String oauthTokenAccess = null;
-
+    private long millisecond2second = 1000L;
+    
     public OAuthBasicClient(String consumerKey, String consumerSecret)
     {
         this.consumerKey = new String(consumerKey);
@@ -249,9 +251,11 @@ public class OAuthBasicClient
         {
             try
             {
+              Random rand = new Random();
+              oauthTimestamp = (int) (System.currentTimeMillis() / millisecond2second);
               method.setRequestHeader("Content-Type", "text/xml");                
               method.setRequestHeader("User-Agent", "Apache XML RPC 3.1.3 (Jakarta Commons httpclient Transport)");
-              method.setRequestHeader("Authorization", "OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + accessTokenSecret + "\",oauth_signature=\"" + consumerSecret + "%26"+ accessToken + "\",oauth_timestamp=" + oauthTimestamp );
+              method.setRequestHeader("Authorization", "OAuth oauth_nonce=\"" + rand.nextInt() + "\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + accessTokenSecret + "\",oauth_signature=\"" + consumerSecret + "%26"+ accessToken + "\",oauth_timestamp=" + oauthTimestamp );
               System.out.println("OAuth oauth_nonce=\"1705890416\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + accessTokenSecret + "\",oauth_signature=\"" + consumerSecret + "%26"+ accessToken + "\",oauth_timestamp=" + oauthTimestamp );
 
               reqString = new String("<?xml version='1.0' encoding='UTF-8'?>\n<methodCall>\n<methodName>uploadurl</methodName>\n"
@@ -281,7 +285,7 @@ public class OAuthBasicClient
                     oauthTimedelta = Integer.parseInt(reqString.split(":")[1].trim().split(" ")[1]);
                     oauthTimestamp = Math.abs(oauthTimedelta) + oauthTimestamp + 1;
                     */
-                                          System.out.println("respString=" + reqString + "oauthTimestamp=" + oauthTimestamp);
+                        System.out.println("respString=" + reqString + "oauthTimestamp=" + oauthTimestamp);
                         oauthTimedelta = Integer.parseInt(reqString.split("\n")[1].split("\\+")[1].split(":")[0]);
                         
                         /*
