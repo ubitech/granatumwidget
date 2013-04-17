@@ -265,6 +265,7 @@ public class OAuthBasicClient
               System.out.println("respString=" + reqString);
               method.setRequestEntity(new StringRequestEntity(reqString,"text/xml","UTF-8"));
               statusCode = client.executeMethod(method);
+              System.out.println(" ------------- " + statusCode);
               byte[] responseBody = method.getResponseBody();
               respString = new String(responseBody);
 
