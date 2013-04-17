@@ -16,11 +16,13 @@
 
                 <h:panelGrid columns="1">
                     <table>
-                      <td>Molecule,</td>,<td>Molecular Weight</td>,<td>Label</td>,<td>CHEBI</td>
+                        <tr>
+                        <td>Label</td>,<td>CHEBI</td>
+                        </tr>
                     </table>                          
                    
                     <rich:list id="molTable" value="#{InSilicoBean.molResults}" var="mol" rows="#{InSilicoBean.molLength}">
-                            <h:outputText value='#{mol.get("mol")}'/>,<h:outputText value='#{mol.get("molWt")}'/>,<h:outputText value='#{mol.get("mol_label")}'/>,<h:outputText value='#{mol.get("chebiMol")}'/>
+                            <h:outputText value='#{mol.get("mol_label")}'/>,<h:outputText value='#{mol.get("chebiMol")}'/>
                     </rich:list>
                     <h:commandLink id="export" action='#{InSilicoBean.sentToWorkflowTool}' value='Export' styleClass="submitButton" target="_new">
                         <f:param name="csvfile" value='#{InSilicoBean.csvfile}' />
