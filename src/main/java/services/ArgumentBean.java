@@ -398,11 +398,21 @@ implements Serializable
         this.paperFormatRDFXML = new String("");
         argumentsList = new LinkedList<JSONObject>();
 
-        this.title = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("Title"));
-        this.url   = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("URL"));
-        this.journal = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("JournalTitle"));
-        this.pid = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("pId"));
-
+        try
+        {
+            this.title = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("Title"));
+            this.url   = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("URL"));
+            this.journal = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("JournalTitle"));
+            this.pid = new String(((JSONObject)res.getJSONArray("PublicationInfo").get(0)).getString("pId"));
+        }
+        catch(Throwable t)
+        {
+            this.title = new String("N/A");
+            this.url   = new String("N/A");
+            this.journal = new String("N/A");
+            this.pid = new String("N/A");
+        }
+        
         this.paperFormatRDFXML = "<rdf:RDF xmlns=\"http://chem.deri.ie/granatum/\"" +
                                 "\txmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"" +
                                 "\txmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"" +
