@@ -144,7 +144,12 @@ public class OAuthBasicClient
         {
                 System.out.println("Status code=" + statusCode);
                 try {
-                  method.setRequestHeader("Authorization", "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"2376346\",oauth_timestamp=" + oauthTimestamp);                
+                  Random rand = new Random();
+                  oauthTimestamp = (int) (System.currentTimeMillis() / millisecond2second);
+                    
+                  method.setRequestHeader("Authorization", "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"" + rand.nextInt() + "\",oauth_timestamp=" + oauthTimestamp);                
+//                  method.setRequestHeader("Authorization", "OAuth oauth_nonce=\"" + rand.nextInt() + "\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_token=\"" + accessTokenSecret + "\",oauth_signature=\"" + consumerSecret + "%26"+ accessToken + "\",oauth_timestamp=" + oauthTimestamp );
+                  
                   System.out.println("AUTH= " + "OAuth oauth_signature=\"" + consumerSecret + "%26\",oauth_consumer_key=\"" + consumerKey + "\",oauth_signature_method=\"PLAINTEXT\",oauth_nonce=\"2376346\",oauth_timestamp=" + oauthTimestamp);
                   statusCode = client.executeMethod(method);
                   byte[] responseBody = method.getResponseBody();
