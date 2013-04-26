@@ -15,10 +15,9 @@
 
             <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}" >
 
+                #{RelatedInformationBean.userRelatedPublications}
 
-                                    #{RelatedInformationBean.userRelatedPublications}
-                                    <!--<a4j:repeat id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp">-->
-                                    <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7">
+                <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7">
                                     <rich:column>
                                     <f:facet name="header">
                                         Related Material
@@ -36,8 +35,7 @@
                                         </tr>                                        
                                     </table> 
                                     </rich:column>
-                                    </rich:dataTable>
-
+                    </rich:dataTable>
             </h:panelGrid>
 <!--    </h:form> -->
     </ui:define>
