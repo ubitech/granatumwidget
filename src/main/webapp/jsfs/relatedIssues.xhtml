@@ -10,6 +10,7 @@
                 template="/templates/template.xhtml"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions" >
 
+    <ui:define name="content">
 <!--      <h:form> -->
 
             <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}" >
@@ -37,6 +38,7 @@
                     </rich:dataTable>
             </h:panelGrid>
 <!--    </h:form> -->
+    </ui:define>
 </ui:composition>
 </html>
 
