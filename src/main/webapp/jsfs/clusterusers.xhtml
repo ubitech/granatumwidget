@@ -11,6 +11,7 @@
     <title>Cluster Users</title>
     <ui:define name="content">
 
+            <p>Similar users from the community</p>
             #{SemanticNetworkAnalysisBean.getClusteringService()}
             <h:panelGroup id="mastergroup2" rendered="#{SemanticNetworkAnalysisBean.errorOccured==false}">
                 <h:panelGrid columns="1">

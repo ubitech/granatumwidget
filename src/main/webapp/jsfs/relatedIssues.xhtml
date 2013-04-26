@@ -13,12 +13,12 @@
     <ui:define name="content">
 <!--      <h:form> -->
 
-            <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}" style="width:400px;">
+            <h:panelGrid columns="2" rendered="#{RelatedInformationBean.conf=='1'}" >
 
 
                                     #{RelatedInformationBean.userRelatedPublications}
                                     <!--<a4j:repeat id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp">-->
-                                    <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7" >
+                                    <rich:dataTable id="relatedPublicationTable" value="#{RelatedInformationBean.relatedPublicationList}" var="rp" iterationStatusVar="it"  rows="7">
                                     <rich:column>
                                     <f:facet name="header">
                                         Related Material
