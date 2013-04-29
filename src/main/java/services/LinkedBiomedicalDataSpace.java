@@ -387,7 +387,7 @@ extends Service
                              "?mol <http://www.w3.org/2000/01/rdf-schema#label> ?label. " + 
                              "?mol <http://bio2rdf.org/ns/bio2rdf#smiles> ?smile. " +
                              "?mol <http://bio2rdf.org/ns/bio2rdf#sameAs> ?sameas. " +              
-                             "filter regex(?str,\"" + searchTerm + "\",\"i\").} limit " + maxReturnedResults);
+                             "filter regex(?label,\"" + searchTerm + "\",\"i\").} limit " + maxReturnedResults);
 
         bindingNames = new String[5];
         bindingNames[0] = "index";
