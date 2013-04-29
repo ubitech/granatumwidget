@@ -319,11 +319,13 @@ extends Service
     public Collection searchSpecificChemoAgent(String searchTerm)
     throws Throwable
     {
+        formalizeQueryString("");
         formalizeQueryString("SELECT distinct ?ChemoAgent ?Label ?sdf WHERE " + 
                              "{ ?ChemoAgent a <http://chem.deri.ie/granatum/ChemopreventiveAgent>. " +
-                             "?ChemoAgent <http://www.w3.org/2000/01/rdf-schema#label> ?Label. " +
-                             "?ChemoAgent <http://chem.deri.ie/granatum/sdf_file> ?sdf." +
-                             "filter regex(?Label,\""+ searchTerm +"\",\"i\").} limit " + maxReturnedResults);
+                             "?ChemoAgent <http://www.w3.org/2000/01/rdf-schema#label> ?str. " +
+                             "?ChemoAgent <http://chem.deri.ie/granatum/sdf_file> ?sdf. " +
+                             "BIND(REPLACE(str(?str),\",\",\"\") AS ?Label). " +
+                             "filter regex(?str,\""+ searchTerm +"\",\"i\").} limit " + maxReturnedResults);
 
         bindingNames = new String[4];
         bindingNames[0] = "index";
