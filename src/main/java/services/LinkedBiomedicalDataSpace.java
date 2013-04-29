@@ -384,10 +384,11 @@ extends Service
     {
         formalizeQueryString("SELECT ?mol ?label ?smile ?sameas WHERE " + 
                              "{ ?mol a <http://chem.deri.ie/granatum/Molecule>. " +
-                             "?mol <http://www.w3.org/2000/01/rdf-schema#label> ?label. " + 
+                             "?mol <http://www.w3.org/2000/01/rdf-schema#label> ?str. " + 
                              "?mol <http://bio2rdf.org/ns/bio2rdf#smiles> ?smile. " +
                              "?mol <http://bio2rdf.org/ns/bio2rdf#sameAs> ?sameas. " +
-                             "filter regex(?label,\"" + searchTerm + "\",\"i\").} limit " + maxReturnedResults);
+                             "BIND(REPLACE(str(?str),\",\",\"\") AS ?Label). " +                
+                             "filter regex(?str,\"" + searchTerm + "\",\"i\").} limit " + maxReturnedResults);
 
         bindingNames = new String[5];
         bindingNames[0] = "index";
