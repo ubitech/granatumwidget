@@ -39,7 +39,7 @@
             <h:panelGroup id="mastergroup3" rendered="#{SearchBean.annotations == '2'}">
                 <h:panelGrid columns="1">
                     <rich:list id="molTable" value="#{SearchBean.molResults}" var="mol" rows="#{SearchBean.molLength}">
-                            <h:outputLink value='#{mol.get("mol")}'>#{mol.get("label")}</h:outputLink>
+                            <h:outputLink value='#{mol.get("sameas")}'>#{mol.get("label")}</h:outputLink>
                     </rich:list>
                     <a href='#{SearchBean.basicQueryInterfaceURL}' target="_new">More Results</a> | <a href="http://granatum.srvgal51.deri.ie/explorer" target="_new">Advanced Query Construction</a>
                 </h:panelGrid>
