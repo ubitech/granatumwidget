@@ -27,8 +27,8 @@ extends Service
     
     public ArgLinkedBiomedicalDataSpace()
     {       
-            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum");
-//                setServiceURL("http://192.168.1.202:3030/ds");
+//            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum");
+            setServiceURL("http://srvgal78.deri.ie:8080");
     }
 
     private void formalizeQueryString(String query)

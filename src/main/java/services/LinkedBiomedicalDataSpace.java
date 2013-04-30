@@ -36,7 +36,8 @@ extends Service
     
     public LinkedBiomedicalDataSpace()
     {       
-            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum/sparql?output=CSV&query=");
+//            setServiceURL("http://granatum.srvgal51.deri.ie/graph/Granatum/sparql?output=CSV&query=");
+            setServiceURL("http://srvgal78.deri.ie:8080/sparql?output=CSV&query=");        
     }
 
     private void formalizeQueryString(String query)
